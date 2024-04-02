@@ -1,4 +1,7 @@
 
+import streamlit as st
+
+
 from streamlit_option_menu import option_menu
 
 from src.sentiment_analysis import sentiment_analysis
@@ -44,3 +47,4 @@ class App:
 if __name__=='__main__':
     app=App()
     app.run()
+
