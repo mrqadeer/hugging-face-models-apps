@@ -2,6 +2,7 @@ import requests
 import streamlit as st
 
 def sentiment_analysis(text):
+    Access_Token = "" # Add your access token here
     try:
         API_URL = "https://api-inference.huggingface.co/models/cardiffnlp/twitter-roberta-base-sentiment-latest"
         headers = {"Authorization": f"Bearer {Access_Token}"}
