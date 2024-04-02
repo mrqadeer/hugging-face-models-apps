@@ -5,9 +5,10 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 
 from src.sentiment_analysis import sentiment_analysis
+from src.huggingface import HuggingFace
+from src.home import Home
 
-from src.home import home
-st.set_page_config("Movie Recommendation System",page_icon='🎥')
+st.set_page_config("HuggingFace")
 
 #main class
 class App:
@@ -21,7 +22,7 @@ class App:
         with st.sidebar:
             app=option_menu(
                 menu_title='Introduction',
-                options=['Home','Sentiment'],
+                options=['Home','HuggingFace'],
                 icons=['house-heart','command'],
                 menu_icon='info',
                 default_index=0,
@@ -36,11 +37,12 @@ class App:
                 }
             )
         if app=='Home':
-            home=Home()
-            home.home()
-        if app=='Prediction':
-            prediction=ModelPredictions()
-            prediction.prediction()
+            home=Home.home()
+            
+        if app=='HuggingFace':
+            huggingface=HuggingFace()
+            huggingface.huggingface()
+            
             
 
             
