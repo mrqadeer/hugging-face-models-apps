@@ -1,4 +1,7 @@
 import streamlit as st
 
-def home():
-    st.title("Sentiment Analysis")
+class Home:
+    def __init__(self):
+        pass
+    def home():
+        st.title("Sentiment Analysis")
