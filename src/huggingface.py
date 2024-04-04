@@ -1,8 +1,11 @@
 import streamlit as st 
+
 from src.modelzone import ModelZone
+#changed
+
 class HuggingFace:
     def __init__(self) -> None:
-        self.modelzone=ModelZone()
+        self.introduction=HuggingFace()
     
     def huggingface(self):
         
@@ -11,10 +14,10 @@ class HuggingFace:
             "NLP","Audio","MultiModal"
         ])
         if category=="NLP":
-            self.modelzone.nlp()
+            self.introduction.nlp()
         elif category=="Audio":
-            self.modelzone.audio()
+            self.introduction.audio()
         elif category=="MultiModal":
-            self.modelzone.multimodal()
+            self.introduction.multimodal()
             
             
