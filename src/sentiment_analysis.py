@@ -14,7 +14,6 @@ def sentiment_analysis(text):
         output = query({
             "inputs": text,
         })
-        return output[0][0]['label'].title()
     except requests.ConnectionError as e:
         st.error("Connection error")
     except requests.ConnectTimeout as e:
@@ -26,4 +25,4 @@ def sentiment_analysis(text):
     except requests.HTTPError as e:
         st.error("HTTP error")
     else:
-        return "This"
+        return output[0][0]['label'].title()

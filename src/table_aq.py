@@ -1,12 +1,10 @@
 import requests
 import streamlit as st
 
-def name_entity_recognition(text):
-    
+def table_answer_question(query, table):
     Access_Token = "" # Add your access token here
-    
-    try:    
-        API_URL = "https://api-inference.huggingface.co/models/tsmatz/xlm-roberta-ner-japanese"
+    try:        
+        API_URL = "https://api-inference.huggingface.co/models/google/tapas-base-finetuned-wtq"
         headers = {"Authorization": f"Bearer {Access_Token}"}
 
         def query(payload):
@@ -14,8 +12,21 @@ def name_entity_recognition(text):
             return response.json()
 
         output = query({
-            "inputs": "My name is Sarah Jessica Parker but you can call me Jessica",
+            "inputs": {
+                "query": "How many stars does the transformers repository have?",
+                "table": {
+                    "Repository": ["Transformers", "Datasets", "Tokenizers"],
+                    "Stars": ["36542", "4512", "3934"],
+                    "Contributors": ["651", "77", "34"],
+                    "Programming language": [
+                        "Python",
+                        "Python",
+                        "Rust, Python and NodeJS"
+                    ]
+                }
+            },
         })
+    
     except requests.ConnectionError as e:
         st.error("Connection error")
     except requests.ConnectTimeout as e:
@@ -28,7 +39,3 @@ def name_entity_recognition(text):
         st.error("HTTP error")
     else:
         return output
-        
-    output = output
-    for item in output:
-        print(f"Category: {item['entity_group']}, Word: {item['word']}")
