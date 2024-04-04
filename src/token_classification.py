@@ -1,7 +1,7 @@
 import requests
 import streamlit as st
 
-def name_entity_recognition(text):
+def token_classification(text):
     
     Access_Token = "" # Add your access token here
     
@@ -27,8 +27,4 @@ def name_entity_recognition(text):
     except requests.HTTPError as e:
         st.error("HTTP error")
     else:
-        return output
-        
-    output = output
-    for item in output:
-        print(f"Category: {item['entity_group']}, Word: {item['word']}")
+        return output[0]['entity_group']
