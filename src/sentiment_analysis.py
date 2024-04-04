@@ -1,8 +1,8 @@
 import requests
 import streamlit as st
 
-def sentiment_analysis(text):
-    Access_Token = "" # Add your access token here
+def sentiment_analysis(text,Access_Token):
+    
     try:
         API_URL = "https://api-inference.huggingface.co/models/cardiffnlp/twitter-roberta-base-sentiment-latest"
         headers = {"Authorization": f"Bearer {Access_Token}"}
@@ -25,5 +25,4 @@ def sentiment_analysis(text):
         st.error("Unknown error")
     except requests.HTTPError as e:
         st.error("HTTP error")
-    else:
-        return "This"
+    

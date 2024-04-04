@@ -1,5 +1,6 @@
 import streamlit as st 
 from src.sentiment_analysis import sentiment_analysis
+
 class ModelZone:
     def __init__(self) -> None:
         pass
@@ -13,6 +14,10 @@ class ModelZone:
             st.subheader("Sentiment Analysis")
             st.divider()
             text=st.text_area("Enter your Text",placeholder="I like you, I love you")
-            sentiment_analysis(text)
+            do_sentiment=st.button("Analyze")
+            if do_sentiment:
+                token=st.session_state
+                output=sentiment_analysis(text,token)
+                st.info(output)
     
             
