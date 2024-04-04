@@ -2,7 +2,7 @@ import streamlit as st
 from src.hf_intro import HuggingFace
 class HuggingFace:
     def __init__(self) -> None:
-        self.hf_intro=HuggingFace()
+        self.introduction=HuggingFace()
     
     def huggingface(self):
         

@@ -3,7 +3,7 @@ from src.modelzone import ModelZone
 
 class HuggingFace:
     def __init__(self):
-        self.modelzone = ModelZone()
+        self.modelzone=ModelZone()
     
     def huggingface(self):
         with st.sidebar:
