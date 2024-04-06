@@ -1,5 +1,6 @@
 import streamlit as st 
 from src.sentiment_analysis import sentiment_analysis
+
 from src.token_classification import token_classification
 from src.table_qa import table_question_answering
 from src.text_speech import text_to_speech
@@ -13,6 +14,7 @@ from src.translation import text_translator
 from src.text_generation import text_generator
 from src.fill_mask import fill_mask
 #from similarity import sentence_similarity
+
 
 class ModelZone:
     def __init__(self) -> None:
@@ -30,6 +32,14 @@ class ModelZone:
         if select=="Sentiment Analysis":
             st.subheader("Sentiment Analysis")
             st.divider()
+
+            text=st.text_area("Enter your Text",placeholder="I like you, I love you")
+            do_sentiment=st.button("Analyze")
+            if do_sentiment:
+                token=st.session_state
+                output=sentiment_analysis(text,token)
+                st.info(output)
+
             text=st.text_area("Enter your Text", placeholder="universe is full of wonders.")
             analyse_button_clicked = st.button("Analyse")
             if analyse_button_clicked:
@@ -124,6 +134,7 @@ class ModelZone:
             else:
                 st.write("Click the button to")
                 
+
         # if select=="Sentence Similarity":
         #     st.subheader("Sentence Similarity")
         #     st.divider()
@@ -137,6 +148,17 @@ class ModelZone:
         #         sentence_similarity(source_sentence, list_of_sentences)
         #     else:
         #         st.write("Click the button to check similarity")
+
+        if select=="Sentence Similarity":
+            st.subheader("Sentence Similarity")
+            st.divider()
+            text=st.text_area("Enter your Text", placeholder="")
+            find_button_clicked = st.button("Find Similarity")
+            if find_button_clicked:
+                sentence_similarity(text)
+            else:
+                st.write("Click the button to")
+
     
     def audio(self):
         st.title("Audio")
