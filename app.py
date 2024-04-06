@@ -22,7 +22,7 @@ class App:
         with st.sidebar:
             app=option_menu(
                 menu_title='Introduction',
-                options=['Home','HuggingFace'],
+                options=['Home','HuggingFace Models'],
                 icons=['house-heart','command'],
                 menu_icon='info',
                 default_index=0,
@@ -39,7 +39,7 @@ class App:
         if app=='Home':
             home=Home.home()
             
-        if app=='HuggingFace':
+        if app=='HuggingFace Models':
             huggingface=HuggingFace()
             huggingface.huggingface()
             
