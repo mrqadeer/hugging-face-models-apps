@@ -1,21 +1,23 @@
 import requests
 import streamlit as st
 
-def token_classification(text):
-    
+def text_to_audio(text):
     Access_Token = "" # Add your access token here
-    
-    try:    
-        API_URL = "https://api-inference.huggingface.co/models/tsmatz/xlm-roberta-ner-japanese"
+    try:
+        API_URL = "https://api-inference.huggingface.co/models/facebook/musicgen-small"
         headers = {"Authorization": f"Bearer {Access_Token}"}
 
         def query(payload):
             response = requests.post(API_URL, headers=headers, json=payload)
-            return response.json()
+            return response.content
 
-        output = query({"inputs": text,})
-        return output
-        
+        audio_bytes = query({
+            "inputs": text,
+        })
+        # You can access the audio with IPython.display for example
+        from IPython.display import Audio
+        Audio(audio_bytes)
+    
     except requests.ConnectionError as e:
         st.error("Connection error")
     except requests.ConnectTimeout as e:

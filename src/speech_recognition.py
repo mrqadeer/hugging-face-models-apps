@@ -1,21 +1,21 @@
 import requests
 import streamlit as st
 
-def token_classification(text):
-    
+def speech_recognition(filename):
     Access_Token = "" # Add your access token here
-    
-    try:    
-        API_URL = "https://api-inference.huggingface.co/models/tsmatz/xlm-roberta-ner-japanese"
+    try:
+        API_URL = "https://api-inference.huggingface.co/models/openai/whisper-large-v3"
         headers = {"Authorization": f"Bearer {Access_Token}"}
 
-        def query(payload):
-            response = requests.post(API_URL, headers=headers, json=payload)
+        def query(filename):
+            with open(filename, "rb") as f:
+                data = f.read()
+            response = requests.post(API_URL, headers=headers, data=data)
             return response.json()
 
-        output = query({"inputs": text,})
+        output = query("sample2.flac")
         return output
-        
+    
     except requests.ConnectionError as e:
         st.error("Connection error")
     except requests.ConnectTimeout as e:

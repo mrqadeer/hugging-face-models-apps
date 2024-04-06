@@ -2,9 +2,10 @@ import streamlit as st
 import requests
 
 def text_to_speech(text):
+    Access_Token = "" # Add your access token here
     try:
         API_URL = "https://api-inference.huggingface.co/models/facebook/mms-tts-eng"
-        headers = {"Authorization": "Bearer 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"}
+        headers = {"Authorization": f"Bearer {Access_Token}"}
 
         def query(payload):
             response = requests.post(API_URL, headers=headers, json=payload)

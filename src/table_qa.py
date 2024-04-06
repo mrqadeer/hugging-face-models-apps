@@ -5,7 +5,7 @@ def table_question_answering(text, table):
     Access_Token = "" # Add your access token here
     try:
         API_URL = "https://api-inference.huggingface.co/models/google/tapas-base-finetuned-wtq"
-        headers = {"Authorization": "Bearer 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"}
+        headers = {"Authorization": f"Bearer {Access_Token}"}
 
         def query(payload):
             response = requests.post(API_URL, headers=headers, json=payload)

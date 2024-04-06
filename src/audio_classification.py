@@ -1,21 +1,23 @@
 import requests
 import streamlit as st
 
-def token_classification(text):
-    
+def audio_classifier():
     Access_Token = "" # Add your access token here
-    
-    try:    
-        API_URL = "https://api-inference.huggingface.co/models/tsmatz/xlm-roberta-ner-japanese"
+    try:
+        API_URL = "https://api-inference.huggingface.co/models/MIT/ast-finetuned-audioset-10-10-0.4593"
         headers = {"Authorization": f"Bearer {Access_Token}"}
 
-        def query(payload):
-            response = requests.post(API_URL, headers=headers, json=payload)
+        audio = st.file_uploader(type="audio")
+        
+        def query(filename):
+            with open(filename, "rb") as f:
+                data = f.read()
+            response = requests.post(API_URL, headers=headers, data=data)
             return response.json()
 
-        output = query({"inputs": text,})
+        output = query(audio)
         return output
-        
+    
     except requests.ConnectionError as e:
         st.error("Connection error")
     except requests.ConnectTimeout as e:
@@ -26,4 +28,3 @@ def token_classification(text):
         st.error("Unknown error")
     except requests.HTTPError as e:
         st.error("HTTP error")
-  
