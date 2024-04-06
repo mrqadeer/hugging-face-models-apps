@@ -13,7 +13,7 @@ from src.summarization import text_summarizer
 from src.translation import text_translator
 from src.text_generation import text_generator
 from src.fill_mask import fill_mask
-#from similarity import sentence_similarity
+from src.similarity import sentence_similarity
 
 
 class ModelZone:
@@ -133,31 +133,20 @@ class ModelZone:
                 fill_mask(text)
             else:
                 st.write("Click the button to")
-                
-
-        # if select=="Sentence Similarity":
-        #     st.subheader("Sentence Similarity")
-        #     st.divider()
-        #     source_sentence=st.text_area("Enter sentence", placeholder="That is a happy person")
-        #     list_of_sentences=st.text_area("Enter list of sentences", placeholder=[
-        #                                                             "That is a happy dog",
-        #                                                             "That is a very happy person",
-        #                                                             "Today is a sunny day"])
-        #     find_button_clicked = st.button("Find Similarity")
-        #     if find_button_clicked:
-        #         sentence_similarity(source_sentence, list_of_sentences)
-        #     else:
-        #         st.write("Click the button to check similarity")
-
+   
         if select=="Sentence Similarity":
+           
             st.subheader("Sentence Similarity")
             st.divider()
-            text=st.text_area("Enter your Text", placeholder="")
+            source_text=st.text_area("Enter your Text", placeholder="")
+            st.divider()
+            sentences=st.text_area(r"Enter Sentences to compare. Use '|' for more than one sentences").split("|")
             find_button_clicked = st.button("Find Similarity")
             if find_button_clicked:
-                sentence_similarity(text)
-            else:
-                st.write("Click the button to")
+                output=sentence_similarity(source_text,sentences)
+                for i,j in zip(sentences,output):
+                    st.info(f"{i.strip()} is {j:.2%} similar to {source_text}")
+
 
     
     def audio(self):
