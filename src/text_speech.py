@@ -1,21 +1,20 @@
-import requests
 import streamlit as st
+import requests
 
-def sentiment_analysis(text):
-    Access_Token = "" # Add your access token here
+def text_to_speech(text):
     try:
-        API_URL = "https://api-inference.huggingface.co/models/cardiffnlp/twitter-roberta-base-sentiment-latest"
-        headers = {"Authorization": f"Bearer {Access_Token}"}
+        API_URL = "https://api-inference.huggingface.co/models/facebook/mms-tts-eng"
+        headers = {"Authorization": "Bearer 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"}
 
         def query(payload):
             response = requests.post(API_URL, headers=headers, json=payload)
-            return response.json()
+            return response.content
 
-        output = query({
-            "inputs": text,
-        })
-        return output[0][0]['label'].title()
-    
+        audio_bytes = query({"inputs": text})
+
+        from IPython.display import Audio
+        Audio(audio_bytes)
+        
     except requests.ConnectionError as e:
         st.error("Connection error")
     except requests.ConnectTimeout as e:
@@ -26,3 +25,4 @@ def sentiment_analysis(text):
         st.error("Unknown error")
     except requests.HTTPError as e:
         st.error("HTTP error")
+  
