@@ -13,9 +13,10 @@ def token_classification(text):
             response = requests.post(API_URL, headers=headers, json=payload)
             return response.json()
 
-        output = query({
-            "inputs": "My name is Sarah Jessica Parker but you can call me Jessica",
-        })
+        output = query({"inputs": text,})
+        return [f"Category: {item['entity_group']}, 
+                        Word: {item['word']}" for item in output]
+        
     except requests.ConnectionError as e:
         st.error("Connection error")
     except requests.ConnectTimeout as e:
@@ -26,5 +27,4 @@ def token_classification(text):
         st.error("Unknown error")
     except requests.HTTPError as e:
         st.error("HTTP error")
-    else:
-        return output[0]['entity_group']
+  

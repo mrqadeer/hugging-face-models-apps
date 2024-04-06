@@ -1,21 +1,19 @@
 import requests
 import streamlit as st
 
-def sentiment_analysis(text,Access_Token):
-    
+def table_question_answering(text, table):
+    Access_Token = "" # Add your access token here
     try:
-        API_URL = "https://api-inference.huggingface.co/models/cardiffnlp/twitter-roberta-base-sentiment-latest"
-        headers = {"Authorization": f"Bearer {Access_Token}"}
+        API_URL = "https://api-inference.huggingface.co/models/google/tapas-base-finetuned-wtq"
+        headers = {"Authorization": "Bearer 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"}
 
         def query(payload):
             response = requests.post(API_URL, headers=headers, json=payload)
             return response.json()
 
-        output = query({
-            "inputs": text,
-        })
-        return output[0][0]['label'].title()
-    
+        output = query({"inputs": {"query": text, "table": table}})
+        return output
+
     except requests.ConnectionError as e:
         st.error("Connection error")
     except requests.ConnectTimeout as e:
