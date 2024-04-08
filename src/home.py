@@ -10,7 +10,9 @@ class Home:
         st.title("HuggingFace Models")
 
         token=st.text_input("Hugging Face Token",type='password')
-        st.session_state.access_token=token
+        if len(token)>0:
+            st.info("Thanks for providing Access Token")
+            st.session_state.access_token=token
 
         st.subheader('A gold mine of models and tools.')
         st.image("https://huggingface.co/front/assets/huggingface_logo.svg")

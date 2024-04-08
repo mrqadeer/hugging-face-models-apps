@@ -20,6 +20,9 @@ from src.object_detection import object_detector
 from src.text_to_image import text_to_image
 from src.image_to_text import image_to_text
 
+import pandas as pd 
+
+
 class ModelZone:
     def __init__(self) -> None:
         pass
@@ -37,12 +40,15 @@ class ModelZone:
             st.subheader("Sentiment Analysis")
             st.divider()
 
-            text=st.text_area("Enter your Text", placeholder="universe is full of wonders.")
-            analyse_button_clicked = st.button("Analyse")
+            text=st.text_area("Enter your Text", placeholder="Universe is full of wonders.")
+            analyse_button_clicked = st.button("Analyze")
             if analyse_button_clicked:
-                sentiment_analysis(text)
-            else:
-                st.write("Click the button to analyse the sentiment of the text")
+                output=sentiment_analysis(text)
+                if output.startswith('N'):
+                    st.warning(output)
+                else:
+                    st.success(output)
+            
             
         if select=="Name Entity Recognition":
             st.subheader("Name Entity Recognition")
@@ -50,24 +56,45 @@ class ModelZone:
             text=st.text_area("Enter your Text", placeholder="My name is Sarah Jessica Parker but you can call me Jessica")
             identify_button_clicked = st.button("Identify")
             if identify_button_clicked:
-                token_classification(text)
-            else:
-                st.write("Click the button to identify the name entity in the text")
+                output=token_classification(text)
+                if len(output)>0:
+                    for item in output:
+                        if item['entity_group'] == 'PER':
+                            entity_type = 'Person name'
+                        elif item['entity_group'] == 'LOC':
+                            entity_type = 'Location Name'
+                        elif item['entity_group'] == 'ORG':
+                            entity_type = 'Company Name'
+                        else:
+                            entity_type = 'Unknown Entity'
+
+                        st.info(f"{entity_type}: {item['word'] } with score: {item['score']:.2%}")
+            
             
         if select=="Table Answer Question":
             st.subheader("Table Answer Question")
             st.divider()
-            text=st.text_area("Enter your querry", placeholder={
-                                                    "query": "How many stars does the transformers repository have?",
-                                                    })
-            table=st.text_area("Share the table", placeholder = {
-                                                    "Repository": ["Transformers", "Datasets", "Tokenizers"],
-                                                    "Stars": ["36542", "4512", "3934"],
-                                                    "Contributors": ["651", "77", "34"],
-                                                    "Programming language": ["Python","Python","Rust, Python and NodeJS"]})
+            done=False
+            with st.expander("Upload Data"):
+                data=st.file_uploader("Upload CSV file",type='csv')
+                if data is not None:
+                    data=pd.read_csv(data)
+                    for col in data:
+                        data[col]=data[col].astype(str)
+                    st.dataframe(data)
+                    table=data.to_dict(orient='list')
+                    done=True
+            text_disabled = not done
+            text=st.text_area("Enter your querry", placeholder=
+                                                        "Tell me about data",disabled=text_disabled)
+            
+            
             extract_button_clicked = st.button("Extract")
             if extract_button_clicked:
-                table_question_answering(text,table)
+                output=table_question_answering(text,table)
+                if len(output)>0:
+                    
+                    st.info(output['cells'][0])
             else:
                 st.write("Click the button to extract the information from the table")
             
