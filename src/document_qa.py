@@ -1,23 +1,29 @@
 import requests
 import streamlit as st
+import base64
 
-def sentiment_analysis(text):
-    Access_Token = st.session_state.access_token
-    st.info(Access_Token)
+def document_question_answering(text, image):
+    Access_Token = "" # Add your access token here
     
     try:
-        API_URL = "https://api-inference.huggingface.co/models/cardiffnlp/twitter-roberta-base-sentiment-latest"
+        API_URL = "https://api-inference.huggingface.co/models/naver-clova-ix/donut-base-finetuned-docvqa"
         headers = {"Authorization": f"Bearer {Access_Token}"}
 
         def query(payload):
+            with open(payload["image"], "rb") as f:
+                img = f.read()
+                payload["image"] = base64.b64encode(img).decode("utf-8")
             response = requests.post(API_URL, headers=headers, json=payload)
             return response.json()
 
         output = query({
-            "inputs": text,
+            "inputs": {
+                "image": "cat.jpg",
+                "question": "What is in this image?"
+            },
         })
-        return output[0][0]['label'].title()
-    
+        
+        return output
     except requests.ConnectionError as e:
         st.error("Connection error")
     except requests.ConnectTimeout as e:

@@ -1,6 +1,5 @@
 import streamlit as st 
 from src.sentiment_analysis import sentiment_analysis
-
 from src.token_classification import token_classification
 from src.table_qa import table_question_answering
 from src.text_speech import text_to_speech
@@ -14,7 +13,12 @@ from src.translation import text_translator
 from src.text_generation import text_generator
 from src.fill_mask import fill_mask
 from src.similarity import sentence_similarity
-
+from src.document_qa import document_question_answering
+from src.depth_estimation import depth_estimator
+from src.image_classification import image_classifier
+from src.object_detection import object_detector
+from src.text_to_image import text_to_image
+from src.image_to_text import image_to_text
 
 class ModelZone:
     def __init__(self) -> None:
@@ -32,13 +36,6 @@ class ModelZone:
         if select=="Sentiment Analysis":
             st.subheader("Sentiment Analysis")
             st.divider()
-
-            text=st.text_area("Enter your Text",placeholder="I like you, I love you")
-            do_sentiment=st.button("Analyze")
-            if do_sentiment:
-                token=st.session_state
-                output=sentiment_analysis(text,token)
-                st.info(output)
 
             text=st.text_area("Enter your Text", placeholder="universe is full of wonders.")
             analyse_button_clicked = st.button("Analyse")
@@ -132,7 +129,7 @@ class ModelZone:
             if mask_button_clicked:
                 fill_mask(text)
             else:
-                st.write("Click the button to")
+                st.write("Click the button to make a prediction.")
    
         if select=="Sentence Similarity":
            
@@ -146,7 +143,8 @@ class ModelZone:
                 output=sentence_similarity(source_text,sentences)
                 for i,j in zip(sentences,output):
                     st.info(f"{i.strip()} is {j:.2%} similar to {source_text}")
-
+            else:
+                st.write("Click the button to find similarity.")
 
     
     def audio(self):
@@ -177,7 +175,7 @@ class ModelZone:
         if select=="Automatic Speech Recognition":
             st.subheader("Automatic Speech Recognition")
             st.divider()
-            filename = st.file_uploader(type="audio")
+            filename = st.file_uploader(type=[".flac", ".wav", ".mp3"], label="Upload Audio")
             recognize_button_clicked = st.button("Recognize")
             if recognize_button_clicked:
                 speech_recognition(filename)
@@ -185,7 +183,7 @@ class ModelZone:
         if select=="Audio Classification":
             st.subheader("Audio Classification")
             st.divider()
-            audio = st.file_uploader(type="audio")
+            audio = st.file_uploader(type=[".flac", ".wav", ".mp3"], label="Upload Audio")
             classify_button_clicked = st.button("Classify")
             if classify_button_clicked:
                 audio_classifier(audio)
@@ -198,51 +196,51 @@ class ModelZone:
                                   "Object Detection", "Text to Image", "Image to Text"],
                                 placeholder="Select a subcategory")
     
-        # if select=="Document Q/A":
-        #     st.subheader("Document Question Answering")
-        #     st.divider()
-        #     text = st.text_box("Enter your querry", placeholder="")
-        #     image = st.file_uploader(type="image")
-        #     process_button_clicked = st.button("Process")
-        #     if process_button_clicked:
-        #         document_question_answering(text, image)
+        if select=="Document Q/A":
+            st.subheader("Document Question Answering")
+            st.divider()
+            text = st.text_area("Enter your querry", placeholder="")
+            image = st.file_uploader(type=[".png", ".jpeg", ".jpg"], label="Upload Image")
+            process_button_clicked = st.button("Process")
+            if process_button_clicked:
+                document_question_answering(text, image)
             
-        # if select=="Depth Estimation":
-        #     st.subheader("Depth Estimation")
-        #     st.divider()
-        #     image = st.file_uploader(type="image")
-        #     estimate_button_clicked = st.button("Estimate")
-        #     if estimate_button_clicked:
-        #         depth_estimator(image)
+        if select=="Depth Estimation":
+            st.subheader("Depth Estimation")
+            st.divider()
+            image = st.file_uploader(type=[".png", ".jpeg", ".jpg"], label="Upload Image")
+            estimate_button_clicked = st.button("Estimate")
+            if estimate_button_clicked:
+                depth_estimator(image)
             
-        # if select =="Image Classification"
-        #     st.subheader("Image Classification")
-        #     st.divider()
-        #     image = st.file_uploader(type="image")
-        #     classify_button_clicked = st.button("Classify")
-        #     if classify_button_clicked:
-        #         image_classifier(image)
+        if select =="Image Classification":
+            st.subheader("Image Classification")
+            st.divider()
+            image = st.file_uploader(type=[".png", ".jpeg", ".jpg"], label="Upload Image")
+            classify_button_clicked = st.button("Classify")
+            if classify_button_clicked:
+                image_classifier(image)
         
-        # if select =="Object Detection"
-        #     st.subheader("Object Detection")
-        #     st.divider()
-        #     image = st.file_uploader(type="image")
-        #     detect_button_clicked = st.button("Detect")
-        #     if detect_button_clicked:
-        #         object_detector(image)
+        if select =="Object Detection":
+            st.subheader("Object Detection")
+            st.divider()
+            image = st.file_uploader(type=[".png", ".jpeg", ".jpg"], label="Upload Image")
+            detect_button_clicked = st.button("Detect")
+            if detect_button_clicked:
+                object_detector(image)
             
-        # if select =="Text to Image"
-        #     st.subheader("Text to Image")
-        #     st.divider()
-        #     text = st.text_box("Enter your querry", placeholder="")
-        #     create_button_clicked = st.button("Create Image")
-        #     if create_button_clicked:
-        #         text_to_image(text)
+        if select =="Text to Image":
+            st.subheader("Text to Image")
+            st.divider()
+            text = st.text_area("Enter your querry", placeholder="Astronaut riding a horse")
+            create_button_clicked = st.button("Create Image")
+            if create_button_clicked:
+                text_to_image(text)
             
-        # if select =="Image to Text"
-        #     st.subheader("Image to Text")
-        #     st.divider()
-        #     image = st.file_uploader(type="image")
-        #     describe_button_clicked = st.button("Describe")
-        #     if describe_button_clicked:
-        #         image_to_text(image)
+        if select =="Image to Text":
+            st.subheader("Image to Text")
+            st.divider()
+            image = st.file_uploader(type=[".png", ".jpeg", ".jpg"], label="Upload Image")
+            describe_button_clicked = st.button("Describe")
+            if describe_button_clicked:
+                image_to_text(image)
