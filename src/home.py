@@ -6,6 +6,7 @@ class Home:
     def home():
         if 'access_token' not in st.session_state:
             st.session_state.access_token=None
+            
         st.title("HuggingFace Models")
 
         token=st.text_input("Hugging Face Token",type='password')

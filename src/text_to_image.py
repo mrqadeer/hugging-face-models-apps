@@ -1,22 +1,23 @@
 import requests
+import io
+from PIL import Image
 import streamlit as st
 
-def sentiment_analysis(text):
-    Access_Token = st.session_state.access_token
-    st.info(Access_Token)
-    
-    try:
-        API_URL = "https://api-inference.huggingface.co/models/cardiffnlp/twitter-roberta-base-sentiment-latest"
+def text_to_image(text):
+    Access_Token = "" # Add your access token here  
+    try: 
+        API_URL = "https://api-inference.huggingface.co/models/runwayml/stable-diffusion-v1-5"
         headers = {"Authorization": f"Bearer {Access_Token}"}
 
         def query(payload):
             response = requests.post(API_URL, headers=headers, json=payload)
-            return response.json()
-
-        output = query({
+            return response.content
+        image_bytes = query({
             "inputs": text,
         })
-        return output[0][0]['label'].title()
+        
+        image = Image.open(io.BytesIO(image_bytes)) 
+        return image   
     
     except requests.ConnectionError as e:
         st.error("Connection error")

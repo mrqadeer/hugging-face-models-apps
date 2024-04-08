@@ -1,22 +1,20 @@
 import requests
 import streamlit as st
 
-def sentiment_analysis(text):
-    Access_Token = st.session_state.access_token
-    st.info(Access_Token)
-    
+def image_to_text(image):
+    Access_Token = "" # Add your access token here
     try:
-        API_URL = "https://api-inference.huggingface.co/models/cardiffnlp/twitter-roberta-base-sentiment-latest"
+        API_URL = "https://api-inference.huggingface.co/models/nlpconnect/vit-gpt2-image-captioning"
         headers = {"Authorization": f"Bearer {Access_Token}"}
 
-        def query(payload):
-            response = requests.post(API_URL, headers=headers, json=payload)
+        def query(filename):
+            with open(filename, "rb") as f:
+                data = f.read()
+            response = requests.post(API_URL, headers=headers, data=data)
             return response.json()
 
-        output = query({
-            "inputs": text,
-        })
-        return output[0][0]['label'].title()
+        output = query(image)
+        return output
     
     except requests.ConnectionError as e:
         st.error("Connection error")
