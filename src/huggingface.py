@@ -1,5 +1,6 @@
 import streamlit as st 
 from src.modelzone import ModelZone
+
 #changed
 class HuggingFace:
     def __init__(self) -> None:

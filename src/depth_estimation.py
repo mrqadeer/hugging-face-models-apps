@@ -8,10 +8,11 @@ def depth_estimator(image):
         pipe = pipeline(task="depth-estimation", model="Intel/dpt-large")
 
         image_url = 'https://storage.googleapis.com/sfr-vision-language-research/BLIP/demo.jpg'  # Example image
-        image = Image.open(requests.get(img_url, stream=True).raw).convert('RGB')
+        image = Image.open(requests.get(image_url, stream=True).raw).convert('RGB')
         result = pipe(image)
         output = result["depth"].save("depth_map.jpg")
         return output
+    
     except requests.ConnectionError as e:
         st.error("Connection error")
     except requests.ConnectTimeout as e:

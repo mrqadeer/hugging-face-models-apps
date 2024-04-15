@@ -2,7 +2,7 @@ import requests
 import streamlit as st
 
 def table_question_answering(text, table):
-    Access_Token = st.session_state.access_token # Add your access token here
+    Access_Token = st.session_state.access_token
     try:
         API_URL = "https://api-inference.huggingface.co/models/google/tapas-base-finetuned-wtq"
         headers = {"Authorization": f"Bearer {Access_Token}"}

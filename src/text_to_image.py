@@ -4,7 +4,7 @@ from PIL import Image
 import streamlit as st
 
 def text_to_image(text):
-    Access_Token = "" # Add your access token here  
+    Access_Token = st.session_state.access_token 
     try: 
         API_URL = "https://api-inference.huggingface.co/models/runwayml/stable-diffusion-v1-5"
         headers = {"Authorization": f"Bearer {Access_Token}"}

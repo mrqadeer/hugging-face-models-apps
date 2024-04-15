@@ -2,7 +2,7 @@ import requests
 import streamlit as st
 
 def sentence_similarity(source_sentence, list_of_sentences):
-    Access_Token = st.session_state.access_token # Add your access token here
+    Access_Token = st.session_state.access_token
     try:            
         API_URL = "https://api-inference.huggingface.co/models/sentence-transformers/all-MiniLM-L6-v2"
         headers = {"Authorization": f"Bearer {Access_Token}"}

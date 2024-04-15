@@ -2,7 +2,7 @@ import requests
 import streamlit as st
 
 def zero_shot_classification(text):
-    Access_Token = "" # Add your access token here
+    Access_Token = st.session_state.access_token
     try:
         API_URL = "https://api-inference.huggingface.co/models/facebook/bart-large-mnli"
         headers = {"Authorization": f"Bearer {Access_Token}"}
