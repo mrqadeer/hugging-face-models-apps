@@ -2,7 +2,7 @@ import requests
 import streamlit as st
 
 def fill_mask(text):
-    Access_Token = "" # Add your access token here
+    Access_Token = st.session_state.access_token
     try:
         API_URL = "https://api-inference.huggingface.co/models/google-bert/bert-base-uncased"
         headers = {"Authorization": f"Bearer {Access_Token}"}

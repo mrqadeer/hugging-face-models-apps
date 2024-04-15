@@ -1,10 +1,7 @@
 
 import streamlit as st
-
-
 from streamlit_option_menu import option_menu
-
-from src.sentiment_analysis import sentiment_analysis
+#from src.sentiment_analysis import sentiment_analysis
 from src.huggingface import HuggingFace
 from src.home import Home
 
@@ -15,7 +12,7 @@ class App:
     def __init__(self) -> None:
         pass
         # with open('src/utils/static/main.css','r') as stlye:
-        #     st.markdown(f"<style>{stlye.read()}</style>",unsafe_allow_html=True)
+        #   st.markdown(f"<style>{stlye.read()}</style>",unsafe_allow_html=True)
         # st.markdown('<link rel="stylesheet" href="src/utils/static/styles.css">', unsafe_allow_html=True)
     
     def run(self):

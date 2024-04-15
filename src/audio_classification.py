@@ -2,7 +2,7 @@ import requests
 import streamlit as st
 
 def audio_classifier():
-    Access_Token = "" # Add your access token here
+    Access_Token = st.session_state.access_token
     try:
         API_URL = "https://api-inference.huggingface.co/models/MIT/ast-finetuned-audioset-10-10-0.4593"
         headers = {"Authorization": f"Bearer {Access_Token}"}

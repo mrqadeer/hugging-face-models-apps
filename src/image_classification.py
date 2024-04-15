@@ -2,7 +2,7 @@ import requests
 import streamlit as st
 
 def image_classifier(image):
-        Access_Token = "" # Add your access token here
+        Access_Token = st.session_state.access_token
         try:
             API_URL = "https://api-inference.huggingface.co/models/google/vit-base-patch16-224"
             headers = {"Authorization": f"Bearer {Access_Token}"}

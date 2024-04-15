@@ -3,7 +3,7 @@ import streamlit as st
 import base64
 
 def document_question_answering(text, image):
-    Access_Token = "" # Add your access token here
+    Access_Token = st.session_state.access_token
     
     try:
         API_URL = "https://api-inference.huggingface.co/models/naver-clova-ix/donut-base-finetuned-docvqa"

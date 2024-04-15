@@ -2,7 +2,7 @@ import requests
 import streamlit as st
 
 def speech_recognition(filename):
-    Access_Token = "" # Add your access token here
+    Access_Token = st.session_state.access_token
     try:
         API_URL = "https://api-inference.huggingface.co/models/openai/whisper-large-v3"
         headers = {"Authorization": f"Bearer {Access_Token}"}

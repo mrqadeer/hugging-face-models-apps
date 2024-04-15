@@ -2,7 +2,7 @@ import requests
 import streamlit as st
 
 def extract_feature(text):
-    Access_Token = "" # Add your access token here
+    Access_Token = st.session_state.access_token
     
     try:
         API_URL = "https://api-inference.huggingface.co/models/openai-community/gpt2"
