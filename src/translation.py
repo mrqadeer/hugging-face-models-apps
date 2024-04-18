@@ -3,7 +3,7 @@ import requests
 import streamlit as st 
 
 def text_translator(text):
-    Access_Token = "" # Add your access token here
+    Access_Token = st.session_state.access_token
     
     try:
         API_URL = "https://api-inference.huggingface.co/models/google-t5/t5-small"

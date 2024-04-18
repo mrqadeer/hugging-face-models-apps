@@ -2,7 +2,7 @@ import requests
 import streamlit as st
 
 def image_to_text(image):
-    Access_Token = "" # Add your access token here
+    Access_Token = st.session_state.access_token
     try:
         API_URL = "https://api-inference.huggingface.co/models/nlpconnect/vit-gpt2-image-captioning"
         headers = {"Authorization": f"Bearer {Access_Token}"}

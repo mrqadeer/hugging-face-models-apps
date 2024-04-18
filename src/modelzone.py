@@ -104,7 +104,7 @@ class ModelZone:
             text=st.text_area("Enter your Text", placeholder="")
             zc_button_clicked = st.button("Zero-Shot")
             if zc_button_clicked:
-                zero_shot_classification(text)
+                output = zero_shot_classification(text)
             else:
                 st.write("Click the button for zero-shot classification.")
                 
