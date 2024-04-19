@@ -56,7 +56,7 @@ class NLPZone:
             self.table_question_answer.table_question_answering()
             
         if select=="Zero-Shot Classification":
-            self.zero_shot_classification()
+            self.zero_short_classification.zero_shot_classification()
                 
         if select=="Feature Extraction":
             self.feature_extraction.feature_extraction()
