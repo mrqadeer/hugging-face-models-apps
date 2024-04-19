@@ -58,7 +58,9 @@ class TextTranslation:
         translate_button_clicked = st.button("Translate",disabled=done)
         if translate_button_clicked:
             translated=self.text_translation_api(text,language_codes[selected_language])
-            translated_text=translated[0]['translation_text']
+            if translated is not None:
+                translated_text=translated[0]['translation_text']
+                st.info(translated_text)
         else:
             st.write("Click the button to translate.")
     

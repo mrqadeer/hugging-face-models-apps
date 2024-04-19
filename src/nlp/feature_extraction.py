@@ -35,6 +35,8 @@ class FeatureExtraction:
         text=st.text_area("Enter your Text", placeholder="Today is a sunny day and I will get some ice cream.")
         extract_button_clicked = st.button("Extract")
         if extract_button_clicked:
-            self.feature_extraction_api(text)
+            output=self.feature_extraction_api(text)
+            if output is not None:
+                st.write(output)
         else:
             st.write("Click the button to extract features")
