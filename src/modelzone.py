@@ -1,32 +1,41 @@
 import streamlit as st 
-from src.sentiment_analysis import sentiment_analysis
-from src.token_classification import token_classification
-from src.table_qa import table_question_answering
-from src.text_speech import text_to_speech
-from src.text_to_audio import text_to_audio
-from src.speech_recognition import speech_recognition
-from src.audio_classification import audio_classifier
-from src.zero_shot_classification import zero_shot_classification
-from src.extract_feature import extract_feature
-from src.summarization import text_summarizer
-from src.translation import text_translator
-from src.text_generation import text_generator
-from src.fill_mask import fill_mask
-from src.similarity import sentence_similarity
-from src.document_qa import document_question_answering
-from src.depth_estimation import depth_estimator
-from src.image_classification import image_classifier
-from src.object_detection import object_detector
-from src.text_to_image import text_to_image
-from src.image_to_text import image_to_text
 
-import pandas as pd 
+from src.nlp.sentiment_analysis import SentimentAnalysis
+from src.nlp.token_classification import TokenClassification
+from src.nlp.zero_shot_classification import ZeroShotClassification
+from src.nlp.table_qa import TableQuestionAnswer
+from src.nlp.text_summarization import TextSummarization
+from src.nlp.text_translation import TextTranslation
+from src.audio.text_speech import text_to_speech
+from src.nlp.feature_extraction import FeatureExtraction
+from src.nlp.text_generation import TextGeneration
+from src.nlp.fill_mask import FillMask
+from src.nlp.sentence_similarity import SentenceSimilarity
+from src.audio.text_to_audio import text_to_audio
+from src.audio.speech_recognition import speech_recognition
+from src.audio.audio_classification import audio_classifier
+from src.multimodal.document_qa import document_question_answering
+from src.multimodal.depth_estimation import depth_estimator
+from src.multimodal.image_classification import image_classifier
+from src.multimodal.object_detection import object_detector
+from src.multimodal.text_to_image import text_to_image
+from src.multimodal.image_to_text import image_to_text
 
 
-class ModelZone:
+
+
+class NLPZone:
     def __init__(self) -> None:
-        pass
-    
+        self.sentiment_analysis=SentimentAnalysis()
+        self.token_classification=TokenClassification()
+        self.table_question_answer=TableQuestionAnswer()
+        self.zero_short_classification=ZeroShotClassification()
+        self.feature_extraction=FeatureExtraction()
+        self.text_summarization=TextSummarization()
+        self.text_translation=TextTranslation()
+        self.text_generation=TextGeneration()
+        self.fill_mask=FillMask()
+        self.sentence_similarity=SentenceSimilarity()
     def nlp(self):
         st.title("Naural Language Processing (NLP)")
         with st.sidebar:
@@ -37,143 +46,38 @@ class ModelZone:
                                 placeholder="Select a subcategory")
             
         if select=="Sentiment Analysis":
-            st.subheader("Sentiment Analysis")
-            st.divider()
-
-            text=st.text_area("Enter your Text", placeholder="Universe is full of wonders.")
-            analyse_button_clicked = st.button("Analyze")
-            if analyse_button_clicked:
-                output=sentiment_analysis(text)
-                if output.startswith('N'):
-                    st.warning(output)
-                else:
-                    st.success(output)
+            self.sentiment_analysis.sentiment_analysis()
             
             
         if select=="Name Entity Recognition":
-            st.subheader("Name Entity Recognition")
-            st.divider()
-            text=st.text_area("Enter your Text", placeholder="My name is Sarah Jessica Parker but you can call me Jessica")
-            identify_button_clicked = st.button("Identify")
-            if identify_button_clicked:
-                output=token_classification(text)
-                if len(output)>0:
-                    for item in output:
-                        if item['entity_group'] == 'PER':
-                            entity_type = 'Person name'
-                        elif item['entity_group'] == 'LOC':
-                            entity_type = 'Location Name'
-                        elif item['entity_group'] == 'ORG':
-                            entity_type = 'Company Name'
-                        else:
-                            entity_type = 'Unknown Entity'
-
-                        st.info(f"{entity_type}: {item['word'] } with score: {item['score']:.2%}")
-            
+            self.token_classification.token_classification()
             
         if select=="Table Answer Question":
-            st.subheader("Table Answer Question")
-            st.divider()
-            done=False
-            with st.expander("Upload Data"):
-                data=st.file_uploader("Upload CSV file",type='csv')
-                if data is not None:
-                    data=pd.read_csv(data)
-                    for col in data:
-                        data[col]=data[col].astype(str)
-                    st.dataframe(data)
-                    table=data.to_dict(orient='list')
-                    done=True
-            text_disabled = not done
-            text=st.text_area("Enter your querry", placeholder=
-                                                        "Tell me about data",disabled=text_disabled)
-            
-            
-            extract_button_clicked = st.button("Extract")
-            if extract_button_clicked:
-                output=table_question_answering(text,table)
-                if len(output)>0:
-                    
-                    st.info(output['cells'][0])
-            else:
-                st.write("Click the button to extract the information from the table")
+            self.table_question_answer.table_question_answering()
             
         if select=="Zero-Shot Classification":
-            st.subheader("")
-            st.divider()
-            text=st.text_area("Enter your Text", placeholder="")
-            zc_button_clicked = st.button("Zero-Shot")
-            if zc_button_clicked:
-                output = zero_shot_classification(text)
-            else:
-                st.write("Click the button for zero-shot classification.")
+            self.zero_shot_classification()
                 
         if select=="Feature Extraction":
-            st.subheader("Feature Extraction")
-            st.divider()
-            text=st.text_area("Enter your Text", placeholder="Today is a sunny day and I will get some ice cream.")
-            extract_button_clicked = st.button("Extract")
-            if extract_button_clicked:
-                extract_feature(text)
-            else:
-                st.write("Click the button to extract features")
+            self.feature_extraction.feature_extraction()
                 
         if select=="Text Summarization":
-            st.subheader("Text Summarization")
-            st.divider()
-            text=st.text_area("Enter your Text", placeholder="The tower is 324 metres (1,063 ft) tall, about the same height as an 81-storey building, and the tallest structure in Paris. Its base is square, measuring 125 metres (410 ft) on each side. During its construction, the Eiffel Tower surpassed the Washington Monument to become the tallest man-made structure in the world, a title it held for 41 years until the Chrysler Building in New York City was finished in 1930. It was the first structure to reach a height of 300 metres. Due to the addition of a broadcasting aerial at the top of the tower in 1957, it is now taller than the Chrysler Building by 5.2 metres (17 ft). Excluding transmitters, the Eiffel Tower is the second tallest free-standing structure in France after the Millau Viaduct.")
-            summarize_button_clicked = st.button("Summarize")
-            if summarize_button_clicked:
-                text_summarizer(text)
-            else:
-                st.write("Click the button to summarize text.")
-                
+            self.text_summarization.text_summarization()
         if select=="Translation":
-            st.subheader("Translation")
-            st.divider()
-            text=st.text_area("Enter your Text", placeholder="Меня зовут Вольфганг и я живу в Берлине")
-            translate_button_clicked = st.button("Translate")
-            if translate_button_clicked:
-                text_translator(text)
-            else:
-                st.write("Click the button to translate.")
-                
+            self.text_translation.text_translation()
         if select=="Text Generation":
-            st.subheader("Text Generation")
-            st.divider()
-            text=st.text_area("Enter your Text", placeholder="Write a story about unicorns and rainbows.")
-            generate_button_clicked = st.button("Generate")
-            if generate_button_clicked:
-                text_generator(text)
-            else:
-                st.write("Click the button to generate content.")
+            self.text_generation.text_generation()
                 
         if select=="Fill Mask":
-            st.subheader("Fill Mask")
-            st.divider()
-            text=st.text_area("Enter your Text", placeholder="The answer to the universe is [MASK].")
-            mask_button_clicked = st.button("FillMask")
-            if mask_button_clicked:
-                fill_mask(text)
-            else:
-                st.write("Click the button to make a prediction.")
+            self.fill_mask.fill_masK()
    
         if select=="Sentence Similarity":
+            self.sentence_similarity.sentence_similarity()
            
-            st.subheader("Sentence Similarity")
-            st.divider()
-            source_text=st.text_area("Enter your Text", placeholder="")
-            st.divider()
-            sentences=st.text_area(r"Enter Sentences to compare. Use '|' for more than one sentences").split("|")
-            find_button_clicked = st.button("Find Similarity")
-            if find_button_clicked:
-                output=sentence_similarity(source_text,sentences)
-                for i,j in zip(sentences,output):
-                    st.info(f"{i.strip()} is {j:.2%} similar to {source_text}")
-            else:
-                st.write("Click the button to find similarity.")
 
-    
+class AudioZone:
+    def __init__(self) -> None:
+        pass
     def audio(self):
         st.title("Audio")
         with st.sidebar:
@@ -215,6 +119,9 @@ class ModelZone:
             if classify_button_clicked:
                 audio_classifier(audio)
             
+class MultiModalZone:
+    def __init__(self) -> None:
+        pass
     def multimodal(self):
         st.title("Multimodal")
         with st.sidebar:
