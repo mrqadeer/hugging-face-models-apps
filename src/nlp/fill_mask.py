@@ -29,7 +29,7 @@ class FillMask:
         except requests.HTTPError as e:
             st.error("HTTP error")
         
-    def fill_masK(self):
+    def fill_mask(self):
         st.subheader("Fill Mask")
         st.divider()
         text=st.text_area("Enter your Text", placeholder="The answer to the universe is [MASK].")

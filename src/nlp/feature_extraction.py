@@ -33,7 +33,7 @@ class FeatureExtraction:
         st.subheader("Feature Extraction")
         st.divider()
         text=st.text_area("Enter your Text", placeholder="Today is a sunny day and I will get some ice cream.")
-        extract_button_clicked = st.button("Extract")
+        extract_button_clicked = st.button("Extract",key='fe')
         if extract_button_clicked:
             output=self.feature_extraction_api(text)
             if output is not None:

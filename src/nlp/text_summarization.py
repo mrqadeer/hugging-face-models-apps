@@ -38,7 +38,7 @@ class TextSummarization:
             
         if summarize_button_clicked:
             output=self.text_summarization_api(text)
-            if output is not None:
+            if len(output)>0:
                 st.info(output[0]['summary_text'])
             else:
                 st.warning("Sorry I was unable to summarize your text")

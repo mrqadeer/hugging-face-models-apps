@@ -3,7 +3,7 @@ import streamlit as st
 class ZeroShotClassification:
     def __init__(self) -> None:
         pass
-    def zero_shot_classification_api(text,labels:list):
+    def zero_shot_classification_api(self,text,labels:list):
         Access_Token = st.session_state.access_token
         try:
             API_URL = "https://api-inference.huggingface.co/models/facebook/bart-large-mnli"

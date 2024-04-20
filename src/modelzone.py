@@ -15,11 +15,11 @@ from src.audio.text_to_audio import text_to_audio
 from src.audio.speech_recognition import speech_recognition
 from src.audio.audio_classification import audio_classifier
 from src.multimodal.document_qa import document_question_answering
-from src.multimodal.depth_estimation import depth_estimator
-from src.multimodal.image_classification import image_classifier
-from src.multimodal.object_detection import object_detector
-from src.multimodal.text_to_image import text_to_image
-from src.multimodal.image_to_text import image_to_text
+from src.computer_vision.depth_estimation import depth_estimator
+from src.computer_vision.image_classification import image_classifier
+from src.computer_vision.object_detection import object_detector
+from src.computer_vision.text_to_image import text_to_image
+from src.computer_vision.image_to_text import image_to_text
 
 
 
@@ -37,42 +37,40 @@ class NLPZone:
         self.fill_mask=FillMask()
         self.sentence_similarity=SentenceSimilarity()
     def nlp(self):
+        # st.title("Naural Language Processing (NLP)")
+        # Define a dictionary mapping select options to functions
+        options_functions = {
+            "Sentiment Analysis": self.sentiment_analysis.sentiment_analysis,
+            "Name Entity Recognition": self.token_classification.token_classification,
+            "Table Answer Question": self.table_question_answer.table_question_answering,
+            "Zero-Shot Classification": self.zero_short_classification.zero_shot_classification,
+            "Feature Extraction": self.feature_extraction.feature_extraction,
+            "Text Summarization": self.text_summarization.text_summarization,
+            "Translation": self.text_translation.text_translation,
+            "Text Generation": self.text_generation.text_generation,
+            "Fill Mask": self.fill_mask.fill_mask,
+            "Sentence Similarity": self.sentence_similarity.sentence_similarity
+        }
+
+        # Streamlit UI
         st.title("Naural Language Processing (NLP)")
+
         with st.sidebar:
-            select=st.selectbox("What do you want to perform",
-                                ["Sentiment Analysis", "Name Entity Recognition", "Table Answer Question",
-                                   "Zero-Shot Classification", "Feature Extraction", "Text Summarization",
-                                   "Translation", "Text Generation", "Fill Mask", "Sentence Similarity"],
+            select = st.selectbox("What do you want to perform",
+                                list(options_functions.keys()),
                                 placeholder="Select a subcategory")
-            
-        if select=="Sentiment Analysis":
-            self.sentiment_analysis.sentiment_analysis()
-            
-            
-        if select=="Name Entity Recognition":
-            self.token_classification.token_classification()
-            
-        if select=="Table Answer Question":
-            self.table_question_answer.table_question_answering()
-            
-        if select=="Zero-Shot Classification":
-            self.zero_short_classification.zero_shot_classification()
-                
-        if select=="Feature Extraction":
-            self.feature_extraction.feature_extraction()
-                
-        if select=="Text Summarization":
-            self.text_summarization.text_summarization()
-        if select=="Translation":
-            self.text_translation.text_translation()
-        if select=="Text Generation":
-            self.text_generation.text_generation()
-                
-        if select=="Fill Mask":
-            self.fill_mask.fill_masK()
-   
-        if select=="Sentence Similarity":
-            self.sentence_similarity.sentence_similarity()
+
+        # Call the selected function
+        if select in options_functions:
+            options_functions[select]()
+        
+
+
+
+
+
+        
+       
            
 
 class AudioZone:
