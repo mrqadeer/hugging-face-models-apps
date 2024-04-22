@@ -32,9 +32,13 @@ class FillMask:
     def fill_mask(self):
         st.subheader("Fill Mask")
         st.divider()
-        text=st.text_area("Enter your Text", placeholder="The answer to the universe is [MASK].")
+        text=st.text_area("Enter your Text", placeholder="For filling mask put - inplace of word.")
+        text=text.replace("-", "[MASK]")
+        
         mask_button_clicked = st.button("FillMask")
         if mask_button_clicked:
-            self.fill_mask_api(text)
+            output=self.fill_mask_api(text)
+            if output is not None:
+                st.info(output[0]['sequence'])
         else:
             st.write("Click the button to make a prediction.")

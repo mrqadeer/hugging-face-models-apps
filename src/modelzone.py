@@ -44,7 +44,7 @@ class NLPZone:
             "Name Entity Recognition": self.token_classification.token_classification,
             "Table Answer Question": self.table_question_answer.table_question_answering,
             "Zero-Shot Classification": self.zero_short_classification.zero_shot_classification,
-            "Feature Extraction": self.feature_extraction.feature_extraction,
+            # "Feature Extraction": self.feature_extraction.feature_extraction,
             "Text Summarization": self.text_summarization.text_summarization,
             "Translation": self.text_translation.text_translation,
             "Text Generation": self.text_generation.text_generation,
@@ -57,7 +57,7 @@ class NLPZone:
 
         with st.sidebar:
             select = st.selectbox("What do you want to perform",
-                                list(options_functions.keys()),
+                                sorted(options_functions.keys()),
                                 placeholder="Select a subcategory")
 
         # Call the selected function

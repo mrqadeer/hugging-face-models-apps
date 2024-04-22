@@ -20,7 +20,8 @@ class SentimentAnalysis:
             output = query({
                 "inputs": text,
             })
-            return output[0][0]['label'].title()
+            return output
+            
         
         except requests.ConnectionError as e:
             st.error("Connection error")
@@ -43,7 +44,8 @@ class SentimentAnalysis:
         analyse_button_clicked = st.button("Analyze",disabled=done)
         if analyse_button_clicked:
             output=self.sentiment_analysis_api(text)
-            if output is not None:
+            if len(output)>0:
+                output=output[0][0]['label'].title()
                 if output.startswith('N'):
                     st.warning(output)
                 else:
