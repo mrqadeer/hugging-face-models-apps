@@ -28,7 +28,10 @@ class ZeroShotClassification:
             st.error("HTTP error")
     def zero_shot_classification(self):
         
-        st.subheader("")
+        st.subheader("Zero Shot Classification")
+        with st.expander("Model Description"):
+            st.write("""This model is a BART model (facebook/bart-large-mnli) that is fine-tuned on the MNLI dataset. 
+                     It is used to classify a given text into a set of labels. Provide a text and labels to classify.""")
         st.divider()
         
         text=st.text_area("Enter your Text", 

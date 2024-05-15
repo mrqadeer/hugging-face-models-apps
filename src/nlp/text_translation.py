@@ -113,6 +113,10 @@ class TextTranslation:
             No return value. Just do the translations.
         """
         st.subheader("Translation")
+        with st.expander("Model Description"):
+            st.markdown("""This model is a translation model (Helsinki-NLP/opus-mt) that is fine-tuned on the OpenAI community dataset. 
+                     It is used to translate text from one language to another. This model supports translation of nine languages including English, Chinese, Germen, Swedish,
+                     French, Spanish, Russian, Arabic and Italian.""")
         st.divider()
     
         cols=st.columns([4,2,4])

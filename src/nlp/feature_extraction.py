@@ -31,6 +31,9 @@ class FeatureExtraction:
             st.error("HTTP error")
     def feature_extraction(self):
         st.subheader("Feature Extraction")
+        with st.expander("Model Description"):
+            st.markdown("""This model is a GPT-2 model that is fine-tuned on the OpenAI community dataset. 
+                     It is used to extract features from a given text.""")
         st.divider()
         text=st.text_area("Enter your Text", placeholder="Today is a sunny day and I will get some ice cream.")
         extract_button_clicked = st.button("Extract",key='fe')

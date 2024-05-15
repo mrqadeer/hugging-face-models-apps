@@ -33,6 +33,9 @@ class SentenceSimilarity:
             st.error("HTTP error")
     def sentence_similarity(self):
         st.subheader("Sentence Similarity")
+        with st.expander("Model Description"):
+            st.write("""This model is a MiniLM model (sentence-transformers/all-MiniLM-L6-v2) that is fine-tuned on the STS Benchmark dataset. 
+                     It is used to find the similarity between two sentences. Provide a source sentence and a list of sentences to compare.""")
         st.divider()
         source_text=st.text_area("Enter your Text", placeholder="")
         st.divider()
