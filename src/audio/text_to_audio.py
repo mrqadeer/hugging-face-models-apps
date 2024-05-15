@@ -15,8 +15,7 @@ def text_to_audio(text):
             "inputs": text,
         })
         # You can access the audio with IPython.display for example
-        from IPython.display import Audio
-        Audio(audio_bytes)
+        return audio_bytes
     
     except requests.ConnectionError as e:
         st.error("Connection error")

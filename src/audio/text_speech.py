@@ -13,8 +13,7 @@ def text_to_speech(text):
 
         audio_bytes = query({"inputs": text})
 
-        from IPython.display import Audio
-        Audio(audio_bytes)
+        return audio_bytes
         
     except requests.ConnectionError as e:
         st.error("Connection error")

@@ -13,8 +13,8 @@ def speech_recognition(filename):
             response = requests.post(API_URL, headers=headers, data=data)
             return response.json()
 
-        output = query("sample2.flac")
-        return output
+        output = query(filename)
+        return output['text']
     
     except requests.ConnectionError as e:
         st.error("Connection error")
@@ -22,8 +22,10 @@ def speech_recognition(filename):
         st.error("Connection timeout")
     except requests.RequestException as e:
         st.error("Request exception")
-    except (Exception, ValueError) as e:
-        st.error("Unknown error")
     except requests.HTTPError as e:
         st.error("HTTP error")
+    except KeyError as e:
+        st.error("Could not generate.")
+    except (Exception, ValueError) as e:
+        st.error("Unknown error")
   
