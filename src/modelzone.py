@@ -168,12 +168,30 @@ class MultiModalZone:
         if select=="Document Q/A":
             st.subheader("Document Question Answering")
             st.divider()
-            text = st.text_area("Enter your querry", placeholder="")
             image = st.file_uploader(type=[".png", ".jpeg", ".jpg"], label="Upload Image")
-            process_button_clicked = st.button("Process")
-            if process_button_clicked:
-                document_question_answering(text, image)
-            
+            st.divider()
+            url=st.text_input("Enter Image URL")
+            if image is not None or url is not None:
+                text = st.text_area("Enter your querry", placeholder="")
+                process_button_clicked = st.button("Process")
+                if process_button_clicked:
+                    
+                    qa_output=document_question_answering(text, image)
+                    # qa_output=document_question_answering(text, url)
+                    for item in qa_output:
+                        st.write(f"{item['answer']} : {item['score']:.2%}")
+                    
+class ComputerVision:
+    def __init__(self) -> None:
+        pass
+    def computer_vision(self): 
+        
+        st.title("Computer Vision")
+        with st.sidebar:
+            select=st.selectbox("What do you want to perform",
+                                ["Depth Estimation", "Image Classification",
+                                  "Object Detection", "Text to Image", "Image to Text"],
+                                placeholder="Select a subcategory")
         if select=="Depth Estimation":
             st.subheader("Depth Estimation")
             st.divider()
