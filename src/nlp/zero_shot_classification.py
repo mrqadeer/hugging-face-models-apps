@@ -13,10 +13,7 @@ class ZeroShotClassification:
                 response = requests.post(API_URL, headers=headers, json=payload)
                 return response.json()
 
-            output = query({
-                "inputs": "Hi, I recently bought a device from your company but it is not working as advertised and I would like to get reimbursed!",
-                "parameters": {"candidate_labels": labels},
-                })
+            output = query({ "inputs": text, "parameters": {"candidate_labels": labels},})
             return output
         
         except requests.ConnectionError as e:
@@ -35,11 +32,11 @@ class ZeroShotClassification:
         st.divider()
         
         text=st.text_area("Enter your Text", 
-                              placeholder="I have a problem with my iphone that needs to be resolved asap",
+                              placeholder="Dune is the best movie ever",
                               )
             
         labels=st.text_area("Enter your labels separated by comma",
-                                    placeholder="urgent ,not urgent,phone, tablet, computer",
+                                    placeholder="CINEMA, ART, MUSIC",
                                     )
         if not (len(labels)>1 and len(text)>1):
             button_action=True
