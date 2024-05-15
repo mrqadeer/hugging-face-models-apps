@@ -1,3 +1,5 @@
+import shutil
+import pathlib
 import streamlit as st 
 
 from src.nlp.sentiment_analysis import SentimentAnalysis
@@ -22,6 +24,8 @@ from src.computer_vision.text_to_image import text_to_image
 from src.computer_vision.image_to_text import image_to_text
 
 
+current_path=pathlib.Path(__file__)
+root_path=current_path.parent.parent
 
 
 class NLPZone:
@@ -85,11 +89,15 @@ class AudioZone:
                                 placeholder="Select a subcategory")
         if select=="Text to Speech":
             st.subheader("Text to Speech")
+            with st.expander("See explanation"):
+                st.markdown("This is a simple way to convert text to speech. Just enter your text and click the button. The text will be converted into audio. You can download the audio file")
             st.divider()
             text = st.text_area("Enter your Text", placeholder="The universe is vast and mysterious and holds countless wonders waiting to be discovered")
-            speak_button_clicked = st.button("Identify")
+            speak_button_clicked = st.button("Get Speech")
             if speak_button_clicked:
-                text_to_speech(text)
+                audio_output=text_to_speech(text)
+                st.audio(audio_output)
+                st.download_button(label="Download Audio", data=audio_output, file_name="audio_output.mp3", mime="audio/flac")
             else:
                 st.write("Click the button to convert your text into speech")
                 
@@ -97,25 +105,54 @@ class AudioZone:
             st.subheader("Text to Audio")
             st.divider()
             text = st.text_area("Enter your Text", placeholder="liquid drum and bass, atmospheric synths, airy sounds")
-            audio_button_clicked = st.button("Create Audio")
+            audio_button_clicked = st.button("Get Audio")
             if audio_button_clicked:
-                text_to_audio(text)
+                text_to_audio_output=text_to_audio(text)
+                st.audio(text_to_audio_output)
+                st.download_button(label="Download Audio", data=text_to_audio_output, file_name="audio_output.mp3", mime="audio/flac")
+                
         
         if select=="Automatic Speech Recognition":
             st.subheader("Automatic Speech Recognition")
             st.divider()
             filename = st.file_uploader(type=[".flac", ".wav", ".mp3"], label="Upload Audio")
-            recognize_button_clicked = st.button("Recognize")
-            if recognize_button_clicked:
-                speech_recognition(filename)
-            
+            if filename is not None:
+                file_folder = root_path / 'data'
+                pathlib.Path.mkdir(file_folder,exist_ok=True)
+                # Save the uploaded file to the data folder
+                file_path = file_folder / filename.name
+                with open(file_path, 'wb') as f:
+                    f.write(filename.read())
+                
+                
+                recognize_button = st.button("Recognize")
+                if recognize_button:
+                    # Call your speech recognition function using the file path
+                    speech_recognition_output = speech_recognition(file_path)
+                    st.text_area("Recognized Text", value=speech_recognition_output)
+                    
+                    
+                
         if select=="Audio Classification":
             st.subheader("Audio Classification")
             st.divider()
-            audio = st.file_uploader(type=[".flac", ".wav", ".mp3"], label="Upload Audio")
+            
+            filename = st.file_uploader(type=[".flac", ".wav", ".mp3"], label="Upload Audio")
+            if filename is not None:
+                
+                file_folder = root_path / 'data'
+                pathlib.Path.mkdir(file_folder,exist_ok=True)
+                # Save the uploaded file to the data folder
+                file_path = file_folder / filename.name
+                with open(file_path, 'wb') as f:
+                    f.write(filename.read())
             classify_button_clicked = st.button("Classify")
             if classify_button_clicked:
-                audio_classifier(audio)
+                audio_classifier_output=audio_classifier(file_path)
+                if audio_classifier_output is not None:
+                    for item in audio_classifier_output:
+                        st.write(f"{item['label']} : {item['score']:.2%}")
+                
             
 class MultiModalZone:
     def __init__(self) -> None:

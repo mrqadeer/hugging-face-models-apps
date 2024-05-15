@@ -1,13 +1,13 @@
 import requests
 import streamlit as st
 
-def audio_classifier():
+def audio_classifier(filename):
     Access_Token = st.session_state.access_token
     try:
         API_URL = "https://api-inference.huggingface.co/models/MIT/ast-finetuned-audioset-10-10-0.4593"
         headers = {"Authorization": f"Bearer {Access_Token}"}
 
-        audio = st.file_uploader(type="audio")
+    
         
         def query(filename):
             with open(filename, "rb") as f:
@@ -15,7 +15,7 @@ def audio_classifier():
             response = requests.post(API_URL, headers=headers, data=data)
             return response.json()
 
-        output = query(audio)
+        output = query(filename)
         return output
     
     except requests.ConnectionError as e:
@@ -24,7 +24,7 @@ def audio_classifier():
         st.error("Connection timeout")
     except requests.RequestException as e:
         st.error("Request exception")
-    except (Exception, ValueError) as e:
-        st.error("Unknown error")
+    # except (Exception, ValueError) as e:
+    #     st.error("Unknown error")
     except requests.HTTPError as e:
         st.error("HTTP error")
