@@ -30,6 +30,9 @@ class TableQuestionAnswer:
             
     def table_question_answering(self):
         st.subheader("Table Answer Question")
+        with st.expander("Model Description"):
+            st.markdown("""This model is a TAPAS model (google/tapas-base-finetuned-wtq) that is fine-tuned on the WikiTableQuestions dataset. 
+                     It is used to answer questions asked on a provided table. Currently this model only supports CSV files.""")
         st.divider()
         done=False
         with st.expander("Upload Data"):

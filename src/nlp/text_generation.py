@@ -25,6 +25,9 @@ class TextGeneration:
 
     def text_generation(self):
         st.subheader("Text Generation")
+        with st.expander("Model Description"):
+            st.markdown("""This model is a Chat with Meta_llama3_8b model that is fine-tuned on the Chat with Meta_llama3_8b dataset. 
+                     It is used to generate text output based on the input text.""")
         st.divider()
         text=st.text_area("Enter your Text", placeholder="Write a story about unicorns and rainbows.")
         done=False if len(text)>1 else True

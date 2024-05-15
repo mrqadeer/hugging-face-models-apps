@@ -31,6 +31,9 @@ class TextSummarization:
             st.error("HTTP error")
     def text_summarization(self):
         st.subheader("Text Summarization")
+        with st.expander("Model Description"):  
+            st.markdown("""This model is a T5 model (Falconsai/text_summarization) that is fine-tuned on the CNN/DailyMail dataset. 
+                     It is used to summarize the long text input provided by the user.""")
         st.divider()
         text=st.text_area("Enter your Text", placeholder="""The tower is 324 metres (1,063 ft) tall, about the same height as an 81-storey building, and the tallest structure in Paris.""")
         done=False if len(text)>1 else True

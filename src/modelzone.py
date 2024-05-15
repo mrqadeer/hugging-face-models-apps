@@ -89,8 +89,9 @@ class AudioZone:
                                 placeholder="Select a subcategory")
         if select=="Text to Speech":
             st.subheader("Text to Speech")
-            with st.expander("See explanation"):
-                st.markdown("This is a simple way to convert text to speech. Just enter your text and click the button. The text will be converted into audio. You can download the audio file")
+            with st.expander("Model Description"):
+                st.markdown("""This model is a TTS model (facebook/mms-tts-eng) that is used to convert text into speech. 
+                            Provide a text to convert into speech. You can also download the output audio.""")
             st.divider()
             text = st.text_area("Enter your Text", placeholder="The universe is vast and mysterious and holds countless wonders waiting to be discovered")
             speak_button_clicked = st.button("Get Speech")
@@ -103,6 +104,9 @@ class AudioZone:
                 
         if select=="Text to Audio":
             st.subheader("Text to Audio")
+            with st.expander("Model Description"):
+                st.markdown("""This model is a TTS model (facebook/musicgen-small) that is used to convert text into audio. 
+                            Provide a text to convert into instrumental audio file. You can also download the output audio file.""")
             st.divider()
             text = st.text_area("Enter your Text", placeholder="liquid drum and bass, atmospheric synths, airy sounds")
             audio_button_clicked = st.button("Get Audio")
@@ -114,6 +118,9 @@ class AudioZone:
         
         if select=="Automatic Speech Recognition":
             st.subheader("Automatic Speech Recognition")
+            with st.expander("Model Description"):
+                st.markdown("""This model is a Speech Recognition model (facebook/wav2vec2-large-960h-lv60-self) that is used to recognize the text from an audio file.
+                            The model predicts transcriptions in the same language as the audio. Provide an audio file to recognize the text.""")
             st.divider()
             filename = st.file_uploader(type=[".flac", ".wav", ".mp3"], label="Upload Audio")
             if filename is not None:
@@ -135,6 +142,9 @@ class AudioZone:
                 
         if select=="Audio Classification":
             st.subheader("Audio Classification")
+            with st.expander("Model Description"):
+                st.markdown("""This model is an Audio Classification model (MIT/ast-finetuned-audioset-10-10) that is used to classify the audio into different categories.
+                            Provide an audio file to classify the audio. The model predicts the labels and their scores.""")
             st.divider()
             
             filename = st.file_uploader(type=[".flac", ".wav", ".mp3"], label="Upload Audio")
@@ -167,6 +177,9 @@ class MultiModalZone:
     
         if select=="Document Q/A":
             st.subheader("Document Question Answering")
+            with st.expander("Model Description"):
+                st.markdown("""This model is a Document Question Answering model (impira/layoutlm-document-qa) that is used to 
+                            extract the answer from the tabular data in the provided document. The model accepts an image to extract the text and then answer the question.""")
             st.divider()
             image = st.file_uploader(type=[".png", ".jpeg", ".jpg"], label="Upload Image")
             st.divider()
@@ -202,6 +215,9 @@ class ComputerVision:
             
         if select =="Image Classification":
             st.subheader("Image Classification")
+            with st.expander("Model Description"):
+                st.markdown("""This model is an Image Classification model (google/vit-base-patch16-224) that is used to classify the image into different categories.
+                            Provide an image to classify the image. The model predicts the labels and their scores.""")
             st.divider()
             image = st.file_uploader(type=[".png", ".jpeg", ".jpg"], label="Upload Image")
             classify_button_clicked = st.button("Classify")
@@ -210,6 +226,9 @@ class ComputerVision:
         
         if select =="Object Detection":
             st.subheader("Object Detection")
+            with st.expander("Model Description"):
+                st.markdown("""This model is an Object Detection model (facebook/detr-resnet-50) that is used to detect the objects in an image.
+                            Provide an image to detect the objects. The model predicts the labels and their bounding boxes.""")
             st.divider()
             image = st.file_uploader(type=[".png", ".jpeg", ".jpg"], label="Upload Image")
             detect_button_clicked = st.button("Detect")
@@ -218,6 +237,9 @@ class ComputerVision:
             
         if select =="Text to Image":
             st.subheader("Text to Image")
+            with st.expander("Model Description"):
+                st.markdown("""This model is a Text to Image model (openai/dall-e-13-3) that is used to generate an image from the given text.
+                            Provide a text to generate an image. The model generates an image based on the text.""")
             st.divider()
             text = st.text_area("Enter your querry", placeholder="Astronaut riding a horse")
             create_button_clicked = st.button("Create Image")
@@ -226,6 +248,9 @@ class ComputerVision:
             
         if select =="Image to Text":
             st.subheader("Image to Text")
+            with st.expander("Model Description"):
+                st.markdown("""This model is an Image to Text model (microsoft/layoutlmv2-base-uncased) that is used to extract the text from an image.
+                            Provide an image to extract the text. The model extracts the text from the image.""")
             st.divider()
             image = st.file_uploader(type=[".png", ".jpeg", ".jpg"], label="Upload Image")
             describe_button_clicked = st.button("Describe")

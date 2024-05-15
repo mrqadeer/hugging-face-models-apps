@@ -34,6 +34,9 @@ class TokenClassification:
             st.error("HTTP error")
     def token_classification(self):
         st.subheader("Name Entity Recognition")
+        with st.expander("Model Description"):
+            st.markdown("""This model is a BERT model (dslim/bert-base-NER) that is fine-tuned on the CoNLL-2003 dataset. 
+                     It is used to identify the entities in a given text. The entities can be a person name, location name, company name or any other entity.""")
         st.divider()
         text=st.text_area("Enter your Text", placeholder="My name is Sarah Jessica Parker but you can call me Jessica")
         done=True

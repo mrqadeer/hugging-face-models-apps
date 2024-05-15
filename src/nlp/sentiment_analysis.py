@@ -35,6 +35,9 @@ class SentimentAnalysis:
             st.error("HTTP error")
     def sentiment_analysis(self):
         st.subheader("Sentiment Analysis")
+        with st.expander("Model Description"):
+            st.markdown("""This model is a RoBERTa model (cardiffnlp/twitter-roberta-base-sentiment) that is fine-tuned on the Twitter dataset. 
+                     It is used to find the sentiment of a given text if it is "Positive", "Negative" or "Neutral".""")
         st.divider()
 
         text=st.text_area("Enter your Text", placeholder="Universe is full of wonders.")

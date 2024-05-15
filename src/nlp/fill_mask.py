@@ -31,6 +31,9 @@ class FillMask:
         
     def fill_mask(self):
         st.subheader("Fill Mask")
+        with st.expander("Model Description"):
+            st.markdown("""This model is a BERT model (google-bert/bert-base-uncased) that is fine-tuned on the Google dataset. 
+                     It is used to fill the mask in a given text. Provide a text with a " - " inplace of word to be MASK.""")
         st.divider()
         text=st.text_area("Enter your Text", placeholder="For filling mask put - inplace of word.")
         text=text.replace("-", "[MASK]")
