@@ -8,14 +8,15 @@ class TextGeneration:
     
     def text_generation_api(self,text):
         try:
-            Access_Token = st.session_state.access_token
+            
             client = Client("ysharma/Chat_with_Meta_llama3_8b")
             result = client.predict(
                     message=text,
                     request=0.5,
                     param_3=512,
                     api_name="/chat")
-            return result.strip("assistant\n\n")
+            if result:
+                return result.strip("assistant\n\n")
             
         except client.ConnectionError as e:
             st.error("Connection error")
