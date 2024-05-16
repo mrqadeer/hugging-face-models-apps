@@ -1,12 +1,12 @@
 import streamlit as st 
-from src.modelzone import NLPZone,AudioZone,MultiModalZone,ComputerVision
+from src.modelzone import NLPZone,AudioZone,MultiModalZone,ComputerVisionZone
 #changed
 class HuggingFace:
     def __init__(self) -> None:
         self.nlp_zone=NLPZone()
         self.audio_zone=AudioZone()
         self.multmodal_zone=MultiModalZone()
-        self.computer_zone=ComputerVision()
+        self.computer_zone=ComputerVisionZone()
     def huggingface(self):
         
         with st.sidebar:
