@@ -4,10 +4,10 @@ import requests
 class TextSpeech:
     def __init__(self) -> None:
         pass
-    def text_to_speech_api(text):
+    def text_to_speech_api(self,text):
         Access_Token = st.session_state.access_token
         try:
-            API_URL = "https://api-inference.huggingface.co/models/facebook/mms-tts-eng"
+            API_URL = "https://api-inference.huggingface.co/models/speechbrain/mtl-mimic-voicebank"
             headers = {"Authorization": f"Bearer {Access_Token}"}
 
             def query(payload):
@@ -39,7 +39,13 @@ class TextSpeech:
         speak_button_clicked = st.button("Get Speech")
         if speak_button_clicked:
             audio_output=self.text_to_speech_api(text)
-            st.audio(audio_output)
-            st.download_button(label="Download Audio", data=audio_output, file_name="audio_output.mp3", mime="audio/flac")
+            temp=audio_output.decode()
+            
+            
+            if not 'error' in temp:
+                st.audio(audio_output)
+                st.download_button(label="Download Audio", data=audio_output, file_name="audio_output.mp3", mime="audio/flac")
+            else:
+                st.warning("Try again...")
         else:
             st.write("Click the button to convert your text into speech")  

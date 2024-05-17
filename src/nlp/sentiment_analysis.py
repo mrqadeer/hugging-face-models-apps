@@ -4,8 +4,20 @@ import streamlit as st
 
 class SentimentAnalysis:
     def __init__(self) -> None:
+        """
+        Initializes the object of the class with no parameters and returns None.
+        """
         pass
-    def sentiment_analysis_api(self,text):
+    def sentiment_analysis_api(self,text:str):
+        """
+        Function to analyze the sentiment of the input text using the Hugging Face model API.
+        
+        Parameters:
+            text (str): The input text to analyze.
+            
+        Returns:
+            dict: The sentiment analysis output in JSON format.
+        """
         Access_Token = st.session_state.access_token
         
         
@@ -34,6 +46,16 @@ class SentimentAnalysis:
         except requests.HTTPError as e:
             st.error("HTTP error")
     def sentiment_analysis(self):
+        """
+        Perform sentiment analysis on the input text using a RoBERTa model fine-tuned on the Twitter dataset.
+        
+        Parameters:
+        - self: the object instance
+        - text: the input text for sentiment analysis
+        
+        Returns:
+        - None
+        """
         st.subheader("Sentiment Analysis")
         with st.expander("Model Description"):
             st.markdown("""This model is a RoBERTa model (cardiffnlp/twitter-roberta-base-sentiment) that is fine-tuned on the Twitter dataset. 
@@ -54,4 +76,4 @@ class SentimentAnalysis:
                 else:
                     st.success(output)
             else:
-                st.warning("I could not understand your text")
+                st.warning("Please try again...")

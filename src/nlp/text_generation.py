@@ -4,9 +4,21 @@ import streamlit as st
 from gradio_client import Client
 class TextGeneration:
     def __init__(self) -> None:
+        """
+        Initializes the object of the class with no parameters and returns None.
+        """
         pass
     
-    def text_generation_api(self,text):
+    def text_generation_api(self,text:str):
+        """
+        A function that interacts with the Hugging Face model API to generate text based on the input text provided. 
+
+        Parameters:
+            text (str): The input text used for text generation.
+
+        Returns:
+            str: The generated text output after processing through the Hugging Face model API.
+        """
         try:
             
             client = Client("ysharma/Chat_with_Meta_llama3_8b")
@@ -24,6 +36,9 @@ class TextGeneration:
      
 
     def text_generation(self):
+        """
+        A function that handles the text generation process based on user input.
+        """
         st.subheader("Text Generation")
         with st.expander("Model Description"):
             st.markdown("""This model is a Chat with Meta_llama3_8b model that is fine-tuned on the Chat with Meta_llama3_8b dataset. 

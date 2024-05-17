@@ -3,8 +3,21 @@ import streamlit as st
 import pandas as pd
 class TableQuestionAnswer:
     def __init__(self) -> None:
+        """
+        Initializes the object of the class with no parameters and returns None.
+        """
         pass
-    def table_question_answering_api(self,text, table):
+    def table_question_answering_api(self,text:str, table):
+        """
+        Performs question answering on a table using the TAPAS model.
+        
+        Parameters:
+            text (str): The query text to be answered.
+            table: The table data to query.
+        
+        Returns:
+            The output of the question answering process.
+        """
         Access_Token = st.session_state.access_token
         try:
             API_URL = "https://api-inference.huggingface.co/models/google/tapas-base-finetuned-wtq"
@@ -29,6 +42,12 @@ class TableQuestionAnswer:
             st.error("HTTP error")
             
     def table_question_answering(self):
+        """
+        Performs question answering on a table using the TAPAS model.
+        
+        Returns:
+            The output of the question answering process.
+        """
         st.subheader("Table Answer Question")
         with st.expander("Model Description"):
             st.markdown("""This model is a TAPAS model (google/tapas-base-finetuned-wtq) that is fine-tuned on the WikiTableQuestions dataset. 
@@ -58,6 +77,7 @@ class TableQuestionAnswer:
                             
                         st.info(output['cells'][0])
                 except Exception as e:
+                    
                     st.error("I could not understand your text")
         else:
             st.write("Please upload CSV file and enter query to extract the information from the table")

@@ -2,8 +2,22 @@ import requests
 import streamlit as st
 class ZeroShotClassification:
     def __init__(self) -> None:
+        """
+        Initializes the ZeroShotClassification object with no parameters and returns None.
+        """
         pass
     def zero_shot_classification_api(self,text,labels:list):
+        """
+        Executes zero-shot classification on the input text with a list of candidate labels.
+        
+        Parameters:
+            self: The object instance.
+            text: The input text to classify.
+            labels: A list of candidate labels for classification.
+        
+        Returns:
+            The output of the zero-shot classification.
+        """
         Access_Token = st.session_state.access_token
         try:
             API_URL = "https://api-inference.huggingface.co/models/facebook/bart-large-mnli"

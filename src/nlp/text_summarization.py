@@ -2,8 +2,20 @@ import requests
 import streamlit as st
 class TextSummarization:
     def __init__(self) -> None:
+        """
+        Initializes the object of the class with no parameters and returns None.
+        """
         pass
-    def text_summarization_api(self,text):
+    def text_summarization_api(self,text:str)->str:
+        """
+        Performs text summarization API call using the given text input.
+        
+        Parameters:
+            text (str): The input text to be summarized.
+        
+        Returns:
+            str: The summarized text.
+        """
         
         Access_Token = st.session_state.access_token
         try:
@@ -17,7 +29,7 @@ class TextSummarization:
             output = query({
                 "inputs": text,
             })
-            return output
+            return output[0]['summary_text']
         
         except requests.ConnectionError as e:
             st.error("Connection error")
@@ -25,11 +37,17 @@ class TextSummarization:
             st.error("Connection timeout")
         except requests.RequestException as e:
             st.error("Request exception")
-        except (Exception, ValueError) as e:
-            st.error("Unknown error")
         except requests.HTTPError as e:
             st.error("HTTP error")
+        except KeyError as e:
+            st.warning("Could not generate.")
+        except (Exception, ValueError) as e:
+            st.error("Unknown error")
     def text_summarization(self):
+        """
+        A function that handles the text summarization process by interacting with the 'text_summarization_api' method based on user input text. 
+        It displays the model description, takes user input, triggers the summarization process on button click, and shows the summarized text or a warning message.
+        """
         st.subheader("Text Summarization")
         with st.expander("Model Description"):  
             st.markdown("""This model is a T5 model (Falconsai/text_summarization) that is fine-tuned on the CNN/DailyMail dataset. 
@@ -42,7 +60,7 @@ class TextSummarization:
         if summarize_button_clicked:
             output=self.text_summarization_api(text)
             if len(output)>0:
-                st.info(output[0]['summary_text'])
+                st.info(output)
             else:
                 st.warning("Sorry I was unable to summarize your text")
         else:

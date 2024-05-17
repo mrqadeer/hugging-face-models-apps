@@ -1,6 +1,7 @@
 import pathlib
 import requests
 import os
+import base64
 import streamlit as st
 from audio_recorder_streamlit import audio_recorder
 
@@ -8,11 +9,11 @@ from audio_recorder_streamlit import audio_recorder
 current_path=pathlib.Path(__file__)
 root_path=current_path.parent.parent.parent
 import tempfile
-class SpeechRecognition:
+class AudioToAudio:
     def __init__(self) -> None:
         pass
 
-    def speech_recognition_api(self,filename):
+    def audio_to_audio_api(self,filename):
         Access_Token = st.session_state.access_token
         try:
             API_URL = "https://api-inference.huggingface.co/models/openai/whisper-large-v3"
@@ -25,7 +26,7 @@ class SpeechRecognition:
                 return response.json()
 
             output = query(filename)
-            return output['text']
+            return output[0]['blob']
         
         except requests.ConnectionError as e:
             st.error("Connection error")
@@ -36,17 +37,17 @@ class SpeechRecognition:
         except requests.HTTPError as e:
             st.error("HTTP error")
         except KeyError as e:
-            st.error("Could not generate.")
+            st.error("Try again...")
         except (Exception, ValueError) as e:
             st.error("Unknown error")
 
-    def speech_recognition(self):
+    def audio_to_audio(self):
         st.subheader("Automatic Speech Recognition")
         with st.expander("Model Description"):
             st.markdown("""This model is a Speech Recognition model (facebook/wav2vec2-large-960h-lv60-self) that is used to recognize the text from an audio file.
                                 The model predicts transcriptions in the same language as the audio. Provide an audio file to recognize the text.""")
         st.divider()
-        
+    
         with st.expander("Upload Audio File", expanded=True):
             filename = st.file_uploader(type=[".flac", ".wav", ".mp3"], label="Upload Audio")
             if filename is not None:
@@ -79,13 +80,29 @@ class SpeechRecognition:
         
         
                         
-        recognize_button = st.button("Recognize")
-        if recognize_button:
+        denoise_button = st.button("Denoise")
+        if denoise_button:
             # Call your speech recognition function using the file path
             if filename is not None:
-                speech_recognition_output =self.speech_recognition_api(file_path)
+                audio_output =self.audio_to_audio_api(file_path)
             elif audio is not None:
-                speech_recognition_output =self.speech_recognition_api(audio_path)
+                audio_output =self.audio_to_audio_api(audio_path)
             else:
                 st.error("Please upload or record an audio file.")
-            st.text_area("Recognized Text", value=speech_recognition_output)
+                st.stop()
+            
+            
+            if audio_output is not None:
+                audio_output=self.string_to_audio(audio_output)
+                st.audio(audio_output)
+                st.download_button(label="Download Audio", data=audio_output, file_name="audio_output.mp3", mime="audio/flac")
+    @staticmethod
+    def string_to_audio(text:str):
+        audio_bytes = base64.b64decode(text)
+        file_path = root_path / 'data'/'output_audio.wav'
+        
+        with open(file_path, "wb") as audio_file:
+            audio_file.write(audio_bytes)
+        with open(file_path, 'rb') as f:
+            audio_bytes = f.read()
+        return audio_bytes

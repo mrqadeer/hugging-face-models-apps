@@ -2,8 +2,21 @@ import requests
 import streamlit as st
 class SentenceSimilarity:
     def __init__(self) -> None:
+        """
+        Initializes the object of the class with no parameters and returns None.
+        """
         pass
-    def sentence_similarity_api(self,source_sentence, list_of_sentences):
+    def sentence_similarity_api(self,source_sentence:str, list_of_sentences:list):
+        """
+        Function to query the Hugging Face API for sentence similarity based on a source sentence and a list of sentences.
+        
+        Parameters:
+            source_sentence (str): The source sentence for which similarity is to be calculated.
+            list_of_sentences (list): A list of sentences to compare against the source sentence.
+        
+        Returns:
+            JSON: The JSON response containing the similarity scores between the source sentence and each sentence in the list.
+        """
         Access_Token = st.session_state.access_token
         try:            
             API_URL = "https://api-inference.huggingface.co/models/sentence-transformers/all-MiniLM-L6-v2"
@@ -32,14 +45,22 @@ class SentenceSimilarity:
         except requests.HTTPError as e:
             st.error("HTTP error")
     def sentence_similarity(self):
+        """
+        A function that handles the sentence similarity process. It prompts the user to enter a source sentence and a list of sentences for comparison. 
+        It then calls the 'sentence_similarity_api' method to find the similarity between the source sentence and each sentence in the list.
+        
+        Returns:
+            None
+        """
         st.subheader("Sentence Similarity")
         with st.expander("Model Description"):
             st.write("""This model is a MiniLM model (sentence-transformers/all-MiniLM-L6-v2) that is fine-tuned on the STS Benchmark dataset. 
                      It is used to find the similarity between two sentences. Provide a source sentence and a list of sentences to compare.""")
         st.divider()
-        source_text=st.text_area("Enter your Text", placeholder="")
+        source_text=st.text_area("Enter your Text", placeholder="I love to play soccer")
         st.divider()
-        sentences=st.text_area(r"Enter Sentences to compare. Use '|' for more than one sentences").split("|")
+        sentences=st.text_area(r"Enter Sentences to compare. Use '|' for more than one sentences",
+                               placeholder='I like football | I love to play cricket.').split("|")
         done=False if len(source_text)>1 and len(sentences)>0 else True
         find_button_clicked = st.button("Find Similarity",disabled=done)
         if find_button_clicked:

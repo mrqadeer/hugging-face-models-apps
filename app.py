@@ -10,12 +10,20 @@ st.set_page_config("HuggingFace")
 #main class
 class App:
     def __init__(self) -> None:
-        pass
+        """
+        Initializes the class by creating a Home and HuggingFace instances.
+        """
+        self.home=Home()
+        self.huggingface=HuggingFace()
         # with open('src/utils/static/main.css','r') as stlye:
         #   st.markdown(f"<style>{stlye.read()}</style>",unsafe_allow_html=True)
         # st.markdown('<link rel="stylesheet" href="src/utils/static/styles.css">', unsafe_allow_html=True)
     
     def run(self):
+        """
+        Runs the application, setting up the sidebar with an option menu for 'Home' and 'HuggingFace Models'.
+        If 'Home' is selected, it displays the home page. If 'HuggingFace Models' is selected, it initializes and displays the HuggingFace models section.
+        """
         with st.sidebar:
             app=option_menu(
                 menu_title='Introduction',
@@ -34,11 +42,11 @@ class App:
                 }
             )
         if app=='Home':
-            home=Home.home()
+            self.home.home()
             
         if app=='HuggingFace Models':
-            huggingface=HuggingFace()
-            huggingface.huggingface()
+            
+            self.huggingface.huggingface()
             
             
 

@@ -5,6 +5,9 @@ import streamlit as st
 # @st.cache_resource
 class TextTranslation:
     def __init__(self) -> None:
+        """
+        Initializes the TextTranslation object with a dictionary of languages and their corresponding translations, as well as APIs for various language translation models.
+        """
         
         self.all_languages={
             
@@ -184,18 +187,18 @@ class TextTranslation:
         if (source_language, output_language) in language_map:
         
             # to disable and enable button
-            done=False if len(text)>1  else True
+            done=False if len(text)>=1  else True
         
             translate_button = st.button("Translate",disabled=done)
             
             if translate_button:
                 # calling the function to hit api of model
                 translated_text = self.text_translation_api(text, language_map[(source_language, output_language)])
-                #Tr
-                st.info(translated_text)
-                with cols[2]:
+                
+                if translated_text is not None:
+                    with cols[2]:
                     
-                    translated_text_holder=st.text_area("Translated Text",key='translated1',
+                        translated_text_holder=st.text_area("Translated Text",key='translated1',
                                                     value=translated_text)
                     
             else:

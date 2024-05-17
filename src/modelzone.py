@@ -1,4 +1,4 @@
-import shutil
+
 import streamlit as st 
 
 from src.nlp.sentiment_analysis import SentimentAnalysis
@@ -7,16 +7,19 @@ from src.nlp.zero_shot_classification import ZeroShotClassification
 from src.nlp.table_qa import TableQuestionAnswer
 from src.nlp.text_summarization import TextSummarization
 from src.nlp.text_translation import TextTranslation
-from src.audio.text_speech import TextSpeech
 from src.nlp.feature_extraction import FeatureExtraction
 from src.nlp.text_generation import TextGeneration
 from src.nlp.fill_mask import FillMask
 from src.nlp.sentence_similarity import SentenceSimilarity
+
 from src.audio.text_to_audio import TextAudio
 from src.audio.speech_recognition import SpeechRecognition
 from src.audio.audio_classification import AudioClassifier
 from src.audio.text_speech import TextSpeech
+from src.audio.text_speech import TextSpeech
+from src.audio.audio_to_audio import AudioToAudio
 from src.multimodal.document_qa import DocumentQuaestionAnswering
+
 from src.computer_vision.image_classification import ImageClassifier
 from src.computer_vision.object_detection import ObjectDetector
 from src.computer_vision.text_to_image import TextToImageGenerator
@@ -25,6 +28,9 @@ from src.computer_vision.image_to_text import ImageToTextGenerator
 
 class NLPZone:
     def __init__(self) -> None:
+        """
+        Initializes various NLP models for sentiment analysis, token classification, table question answering, zero-shot classification, feature extraction, text summarization, text translation, text generation, fill mask, and sentence similarity.
+        """
         self.sentiment_analysis=SentimentAnalysis()
         self.token_classification=TokenClassification()
         self.table_question_answer=TableQuestionAnswer()
@@ -36,8 +42,10 @@ class NLPZone:
         self.fill_mask=FillMask()
         self.sentence_similarity=SentenceSimilarity()
     def nlp(self):
-        # st.title("Naural Language Processing (NLP)")
-        # Define a dictionary mapping select options to functions
+        """
+        This function handles Natural Language Processing (NLP) tasks by allowing the user to select from a variety of options such as Sentiment Analysis, Name Entity Recognition, Table Answer Question, Zero-Shot Classification, Text Summarization, Translation, Text Generation, Fill Mask, and Sentence Similarity. It displays a Streamlit UI with a sidebar for selecting the desired NLP task and calls the corresponding function based on the user's selection.
+        """
+        # Function dictionary mapping select options to functions
         options_functions_nlp = {
             "Sentiment Analysis": self.sentiment_analysis.sentiment_analysis,
             "Name Entity Recognition": self.token_classification.token_classification,
@@ -63,16 +71,24 @@ class NLPZone:
 
 class AudioZone:
     def __init__(self) -> None:
+        """
+        Constructor method to initialize AudioZone class with instances of various audio processing components.
+        """
         self.audio_classification=AudioClassifier()
         self.speech_recognition=SpeechRecognition()
         self.text_speech=TextSpeech()
         self.text_to_audio=TextAudio()
+        self.audio_to_audio=AudioToAudio()
     def audio(self):
+        """
+        This function handles audio processing by providing a Streamlit UI for selecting different audio processing tasks such as Text to Speech, Text to Audio, Automatic Speech Recognition, Audio Classification, and Denoise Audio. It allows the user to choose a subcategory from the options displayed and then calls the corresponding function based on the selection.
+        """
         options_functions_audio = {
             "Text to Speech": self.text_speech.text_to_speech,
             "Text to Audio":self.text_to_audio.text_to_audio,
             "Automatic Speech Recognition":self.speech_recognition.speech_recognition,
-            "Audio Classification":self.audio_classification.audio_classifier
+            "Audio Classification":self.audio_classification.audio_classifier,
+            "Denoise Audio":self.audio_to_audio.audio_to_audio
         }
         # Streamlit UI
         st.title("Audio Processing Models")
@@ -87,9 +103,16 @@ class AudioZone:
                 
 class MultiModalZone:
     def __init__(self) -> None:
+        """
+        Initializes the object of the class. 
+        No parameters are taken, and the function returns None.
+        """
         self.document_qa=DocumentQuaestionAnswering()
         
     def multimodal(self):
+        """
+        This function handles the multimodal functionality by presenting a Streamlit UI for selecting different multimodal tasks, such as Document Question/Answering. It allows the user to choose a subcategory from the options displayed and then calls the corresponding function based on the selection.
+        """
         options_functions_mm = {
             "Document Q/A":self.document_qa.document_question_answering
         }
@@ -105,6 +128,9 @@ class MultiModalZone:
                     
 class ComputerVisionZone:
     def __init__(self) -> None:
+        """
+        Initializes the ComputerVisionZone class with instances of various components for image classification, object detection, text to image generation, and image to text generation.
+        """
         self.image_classification=ImageClassifier()
         self.object_detection=ObjectDetector()
         self.text_to_image=TextToImageGenerator()
@@ -112,6 +138,9 @@ class ComputerVisionZone:
         
         
     def computer_vision(self): 
+        """
+        This function handles the computer vision functionality by presenting a Streamlit UI for selecting different computer vision tasks, such as Image Classification, Object Detection, Text to Image, and Image to Text. It allows the user to choose a subcategory from the options displayed and then calls the corresponding function based on the selection.
+        """
         options_functions_cv = {
             "Image Classification":self.image_classification.image_classifier,
             "Object Detection":self.object_detection.object_detector,

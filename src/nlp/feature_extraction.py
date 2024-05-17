@@ -2,8 +2,20 @@ import requests
 import streamlit as st
 class FeatureExtraction:
     def __init__(self) -> None:
+        """
+        Initializes the object of the class with no parameters and returns None.
+        """
         pass
     def feature_extraction_api(self,text):
+        """
+        This function performs feature extraction using the Hugging Face GPT-2 model.
+        
+        Args:
+            text (str): The input text for feature extraction.
+            
+        Returns:
+            dict: The extracted features based on the input text.
+        """
         Access_Token = st.session_state.access_token
         
         try:
@@ -30,6 +42,10 @@ class FeatureExtraction:
         except requests.HTTPError as e:
             st.error("HTTP error")
     def feature_extraction(self):
+        """
+        A function that handles the feature extraction process. It prompts the user to enter text, extracts features using the 'feature_extraction_api' function, 
+        and displays the extracted features if available. 
+        """
         st.subheader("Feature Extraction")
         with st.expander("Model Description"):
             st.markdown("""This model is a GPT-2 model that is fine-tuned on the OpenAI community dataset. 

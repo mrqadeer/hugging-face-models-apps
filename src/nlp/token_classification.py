@@ -3,8 +3,20 @@ import streamlit as st
 
 class TokenClassification:
     def __init__(self) -> None:
+        """
+        Initializes the TokenClassification object with no parameters and returns None.
+        """
         pass
-    def token_classification_api(self,text):
+    def token_classification_api(self,text:str):
+        """
+        Method to interact with the Hugging Face model API for token classification.
+
+        Parameters:
+            text (str): The input text to classify tokens.
+
+        Returns:
+            dict: The classification results for the input text.
+        """
 
         Access_Token = st.session_state.access_token
         
@@ -33,6 +45,15 @@ class TokenClassification:
         except requests.HTTPError as e:
             st.error("HTTP error")
     def token_classification(self):
+        """
+        Function to perform Name Entity Recognition.
+
+        Parameters:
+            None
+
+        Returns:
+            None
+        """
         st.subheader("Name Entity Recognition")
         with st.expander("Model Description"):
             st.markdown("""This model is a BERT model (dslim/bert-base-NER) that is fine-tuned on the CoNLL-2003 dataset. 
