@@ -42,6 +42,8 @@ class AudioToAudio:
             st.error("Unknown error")
 
     def audio_to_audio(self):
+        file_folder = root_path / 'data'
+        pathlib.Path.mkdir(file_folder,exist_ok=True)
         st.subheader("Automatic Speech Recognition")
         with st.expander("Model Description"):
             st.markdown("""This model is a Speech Recognition model (facebook/wav2vec2-large-960h-lv60-self) that is used to recognize the text from an audio file.
@@ -51,8 +53,7 @@ class AudioToAudio:
         with st.expander("Upload Audio File", expanded=True):
             filename = st.file_uploader(type=[".flac", ".wav", ".mp3"], label="Upload Audio")
             if filename is not None:
-                file_folder = root_path / 'data'
-                pathlib.Path.mkdir(file_folder,exist_ok=True)
+                
                     
                 # Save the uploaded file to the data folder
                 file_path = file_folder / filename.name
@@ -73,7 +74,7 @@ class AudioToAudio:
                 audio_path = os.path.join(root_path/'data', 'audio_file.wav')
                 with open(audio_path, 'wb') as f:
                     f.write(audio)
-                st.success("Thanks for record your voice!")
+                st.success("Thanks for recording your voice!")
                 audio_path=root_path/'data'/'audio_file.wav'
             
             

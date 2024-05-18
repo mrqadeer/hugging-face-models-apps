@@ -36,6 +36,8 @@ class AudioClassifier:
             st.error("HTTP error")
 
     def audio_classifier(self):
+        file_folder = root_path / 'data'
+        pathlib.Path.mkdir(file_folder,exist_ok=True)
         st.subheader("Audio Classification")
         with st.expander("Model Description"):
             st.markdown("""This model is an Audio Classification model (MIT/ast-finetuned-audioset-10-10) that is used to classify the audio into different categories.
@@ -44,8 +46,6 @@ class AudioClassifier:
         with st.expander("Upload Audio"):
             filename = st.file_uploader(type=[".flac", ".wav", ".mp3"], label="Upload Audio")
             if filename is not None:
-                file_folder = root_path / 'data'
-                pathlib.Path.mkdir(file_folder,exist_ok=True)
                 # Save the uploaded file to the data folder
                 file_path = file_folder / filename.name
                 with open(file_path, 'wb') as f:
@@ -64,7 +64,7 @@ class AudioClassifier:
                 audio_path = os.path.join(root_path/'data', 'audio_file.wav')
                 with open(audio_path, 'wb') as f:
                     f.write(audio)
-                st.success("Thanks for record your voice!")
+                st.success("Thanks for recording your voice!")
                 audio_path=root_path/'data'/'audio_file.wav'
             
         

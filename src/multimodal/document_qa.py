@@ -2,6 +2,8 @@ import requests
 import streamlit as st
 import base64
 import pathlib
+from PIL import Image 
+from io import BytesIO
 curr_path=pathlib.Path(__file__)
 root_dir=curr_path.parent.parent.parent
 class DocumentQuaestionAnswering:
@@ -60,21 +62,61 @@ class DocumentQuaestionAnswering:
             st.markdown("""This model is a Document Question Answering model (impira/layoutlm-document-qa) that is used to 
                             extract the answer from the tabular data in the provided document. The model accepts an image to extract the text and then answer the question.""")
         st.divider()
-        image = st.file_uploader(type=[".png", ".jpeg", ".jpg"], label="Upload Image")
+        
         st.divider()
-        # url=st.text_input("Enter Image URL")
-        if image is not None:
-            path=root_dir / 'data'
-            image_name=path/image.name
-            with open(image_name,'wb') as f:
-                f.write(image.getbuffer())
+        path=root_dir / 'data'
+        pathlib.Path.mkdir(path,exist_ok=True)
+        with st.expander("Upload Image"):
+            image = st.file_uploader(type=[".png", ".jpeg", ".jpg"], label="Upload Image")
+            if image is not None:
+                st.image(image)
             
-            text = st.text_area("Enter your querry", placeholder="")
-            process_button_clicked = st.button("Process")
+        with st.expander("Enter Image URL"):
+            url=st.text_input("Enter image URL")
+            if len(url)>=1:
             
-            if process_button_clicked: 
-                qa_output=self.document_question_answering_api(text, image_name)
-                
-                for item in qa_output:
+                image_data=self.image_downlaod(url)
+                if image_data is not None:
+                    st.image(Image.open(BytesIO(image_data)))
+                    image_path=path/'image.png'
                     
-                    st.write(f"{item['answer']} : {item['score']:.2%}")
+                    with open(image_path,'wb') as f:
+                        f.write(image_data)
+            
+           
+        process_button = st.button("Process")
+        if process_button:
+            if image is not None:
+                
+                image_name=path/image.name
+                with open(image_name,'wb') as f:
+                    f.write(image.getbuffer())
+                output=self.document_question_answering_api(image_name)
+            
+            elif len(url)>=1:
+                
+                output=self.document_question_answering_api(image_path)
+            else:
+                st.stop()
+            try:
+                for item in output:
+                    st.info(f"{item['label']}: {item['score']:.2%}")
+            except:
+                st.info(output)
+    @staticmethod
+    def image_downlaod(url:str):
+        """
+        A function that downloads an image from a given URL using requests library.
+
+        Parameters:
+            url: The URL of the image to download.
+
+        Returns:
+            The content of the downloaded image if the download is successful, otherwise None.
+        """
+        response = requests.get(url)
+        if response.status_code == 200:
+            return response.content
+        else:
+            st.error("Failed to download image.")
+            return None

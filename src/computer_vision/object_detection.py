@@ -65,6 +65,8 @@ class ObjectDetector:
             st.markdown("""This model is an Object Detection model (facebook/detr-resnet-50) that is used to detect the objects in an image.
                             Provide an image to detect the objects. The model predicts the labels and their bounding boxes.""")
         st.divider()
+        path=root_dir / 'data'
+        pathlib.Path.mkdir(path,exist_ok=True)
         with st.expander("Upload Image"):
             image = st.file_uploader(type=[".png", ".jpeg", ".jpg"], label="Upload Image")
             if image is not None:
@@ -73,13 +75,10 @@ class ObjectDetector:
         with st.expander("Enter Image URL"):
             url=st.text_input("Enter image URL")
             if len(url)>=1:
-            # Remove any leading backslashes
-                if url.startswith("\\"):
-                    image_url = url[1:]
+            
                 image_data=self.image_downlaod(url)
                 if image_data is not None:
                     st.image(Image.open(BytesIO(image_data)))
-                    path=root_dir / 'data'
                     image_path=path/'image.png'
                     
                     with open(image_path,'wb') as f:
@@ -89,7 +88,7 @@ class ObjectDetector:
         describe_button_clicked = st.button("Describe")
         if describe_button_clicked:
             if image is not None:
-                path=root_dir / 'data'
+                
                 image_name=path/image.name
                 with open(image_name,'wb') as f:
                     f.write(image.getbuffer())

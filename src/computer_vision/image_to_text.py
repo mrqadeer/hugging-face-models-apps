@@ -69,6 +69,9 @@ class ImageToTextGenerator:
             st.markdown("""This model is an Image to Text model (microsoft/layoutlmv2-base-uncased) that is used to extract the text from an image.
                             Provide an image to extract the text. The model extracts the text from the image.""")
         st.divider()
+        path=root_dir / 'data'
+        pathlib.Path.mkdir(path,exist_ok=True)
+        
         with st.expander("Upload Image"):
             image = st.file_uploader(type=[".png", ".jpeg", ".jpg"], label="Upload Image")
             if image is not None:
@@ -77,13 +80,10 @@ class ImageToTextGenerator:
         with st.expander("Enter Image URL"):
             url=st.text_input("Enter image URL")
             if len(url)>=1:
-            # Remove any leading backslashes
-                if url.startswith("\\"):
-                    image_url = url[1:]
+                
                 image_data=self.image_downlaod(url)
                 if image_data is not None:
                     st.image(Image.open(BytesIO(image_data)))
-                    path=root_dir / 'data'
                     image_path=path/'image.png'
                     
                     with open(image_path,'wb') as f:
@@ -93,7 +93,7 @@ class ImageToTextGenerator:
         describe_button_clicked = st.button("Describe")
         if describe_button_clicked:
             if image is not None:
-                path=root_dir / 'data'
+                
                 image_name=path/image.name
                 with open(image_name,'wb') as f:
                     f.write(image.getbuffer())
