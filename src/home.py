@@ -8,7 +8,8 @@ class Home:
         pass
     def home(self):
         """
-        The home function displays the HuggingFace Models webpage, prompts the user for a token input, and provides information about Hugging Face company.
+        The home function displays the HuggingFace Models webpage, prompts the user for a token input, 
+        and provides information about Hugging Face company.
         """
         if 'access_token' not in st.session_state:
             st.session_state.access_token=None
@@ -25,7 +26,8 @@ class Home:
                 st.session_state.access_token=token
 
         st.image("https://huggingface.co/front/assets/huggingface_logo.svg")
-        st.subheader('A gold mine of models and tools.')
+        st.subheader('A gold mine of models, datasets and tools.')
         
-        st.write("Hugging Face is a company that provides a large collection of pre-trained models and tools for Natural Language Processing (NLP).")
+        st.markdown("""Hugging Face is a company that provides a large collection of pre-trained models and tools 
+                 for Natural Language Processing (NLP), Computer Vision, Multimodal, Audio, and other domains.""")
 
