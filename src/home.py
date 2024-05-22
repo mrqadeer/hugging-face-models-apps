@@ -1,5 +1,6 @@
 import streamlit as st
-
+if 'access' not in st.session_state:
+    st.session_state.access=False 
 class Home:
     def __init__(self):
         """
@@ -13,7 +14,7 @@ class Home:
         """
         if 'access_token' not in st.session_state:
             st.session_state.access_token=None
-            
+                   
         st.title("HuggingFace Models")
 
         token=st.text_input("Hugging Face Token",type='password')
@@ -24,6 +25,7 @@ class Home:
             if submit:
                 st.info("Thanks for providing Access Token")
                 st.session_state.access_token=token
+                
 
         st.image("https://huggingface.co/front/assets/huggingface_logo.svg")
         st.subheader('A gold mine of models, datasets and tools.')

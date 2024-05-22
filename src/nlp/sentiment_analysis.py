@@ -32,7 +32,7 @@ class SentimentAnalysis:
             output = query({
                 "inputs": text,
             })
-            return output
+            return output[0][0]['label'].title()
             
         
         except requests.ConnectionError as e:
@@ -41,10 +41,13 @@ class SentimentAnalysis:
             st.error("Connection timeout")
         except requests.RequestException as e:
             st.error("Request exception")
-        except (Exception, ValueError) as e:
-            st.error("Unknown error")
+        except KeyError as e:
+            st.warning("Please Try again...")
         except requests.HTTPError as e:
             st.error("HTTP error")
+        except (Exception, ValueError) as e:
+            st.error("Unknown error")
+        
     def sentiment_analysis(self):
         """
         Perform sentiment analysis on the input text using a RoBERTa model fine-tuned on the Twitter dataset.
@@ -68,12 +71,16 @@ class SentimentAnalysis:
         
         analyse_button_clicked = st.button("Analyze",disabled=done)
         if analyse_button_clicked:
-            output=self.sentiment_analysis_api(text)
-            if len(output)>0:
-                output=output[0][0]['label'].title()
+            try:
+                
+                output=self.sentiment_analysis_api(text)
+
+                
                 if output.startswith('N'):
                     st.warning(output)
                 else:
                     st.success(output)
-            else:
-                st.warning("Please try again...")
+            except Exception as e:
+                st.error("Something went wrong...")
+        else:
+            st.warning("Analyze the text")

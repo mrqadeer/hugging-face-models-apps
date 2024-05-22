@@ -64,8 +64,11 @@ class SentenceSimilarity:
         done=False if len(source_text)>1 and len(sentences)>0 else True
         find_button_clicked = st.button("Find Similarity",disabled=done)
         if find_button_clicked:
-            output=self.sentence_similarity_api(source_text,sentences)
-            for i,j in zip(sentences,output):
-                st.info(f"{i.strip()} is {j:.2%} similar to {source_text}")
+            try:
+                output=self.sentence_similarity_api(source_text,sentences)
+                for i,j in zip(sentences,output):
+                    st.info(f"{i.strip()} is {j:.2%} similar to {source_text}")
+            except:
+                st.info("Sorry I was unable to find the similarity")
         else:
             st.write("Please provide text and sentences for comparision to find similarity.")
