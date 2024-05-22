@@ -1,14 +1,17 @@
+# Import necessary libraries
 from itertools import permutations
 import requests
 import streamlit as st 
 
 # @st.cache_resource
+# Define the Class
 class TextTranslation:
     def __init__(self) -> None:
         """
-        Initializes the TextTranslation object with a dictionary of languages and their corresponding translations, as well as APIs for various language translation models.
+        Initializes the TextTranslation object with a dictionary of languages and their 
+        corresponding translations, as well as APIs for various language translation models.
         """
-        
+        # Define a dictionary of languages and their corresponding translations
         self.all_languages={
             
             'Chinese': ['English', 'German','Swedish'],
@@ -19,10 +22,10 @@ class TextTranslation:
             'English': ['Chinese', 'French', 'Spanish', 'German', 'Russian',"Swedish",'Arabic','Italian'],
             'Swedish': ['English', 'Russian', 'French', 'Chinese'],
             'Arabic':['English','French','Spanish','German','Russian'],
-            'Italian':['English']
-            
+            'Italian':['English']            
         }
-        # apis for each model for each language
+        
+        # APIs of each model for each language
         self.zh_en_api="https://api-inference.huggingface.co/models/Helsinki-NLP/opus-mt-zh-en"
         self.zh_sv_api="https://api-inference.huggingface.co/models/Helsinki-NLP/opus-mt-zh-sv"
         self.zh_de_api="https://api-inference.huggingface.co/models/Helsinki-NLP/opus-mt-zh-de"
@@ -66,35 +69,38 @@ class TextTranslation:
         self.ar_de_api="https://api-inference.huggingface.co/models/Helsinki-NLP/opus-mt-ar-de"
         self.ar_ru_api="https://api-inference.huggingface.co/models/Helsinki-NLP/opus-mt-ar-ru"
         
+    # Define the method to translate text
     def text_translation_api(self,text:str,API_URL:str)->str:
         """
-
-        Args:
+        This function is used to translate text from one language to another using the Hugging Face model API.
         
+        Parameters:
             text (str): This function accepts text as input to translate in other languages.
             API_URL (str): This function will get model api url of hugging face as input.
 
         Returns:
-        
             str: This function return translated text.
         """
-        # hugging face api token stored in streamlit session state
+        # Get the access token from the session state
         Access_Token = st.session_state.access_token
-        
         try:
-           
+            # Specify the header for the API request
             headers = {"Authorization": f"Bearer {Access_Token}"}
 
+            # Define the query function to send the post request (text) to the API
             def query(payload):
-                 
+                # Send the post request to the API
                 response = requests.post(API_URL, headers=headers, json=payload)
+                # Return the response in JSON format
                 return response.json()
-
+            # Call the query function with the text as the argument
             output = query({
                 "inputs": text
             })
+            # Return the translated text
             return output[0]['translation_text']
         
+        # Handling exceptions
         except requests.ConnectionError as e:
             st.error("Connection error")
         except requests.ConnectTimeout as e:
@@ -107,34 +113,47 @@ class TextTranslation:
             st.warning("Please Try Again!")
         except (Exception, ValueError) as e:
             st.error("Unknown error")
+            
     # @st.cache(suppress_st_warning=True)  # Cache the API response
+    # Define the method to perform text translation
     def text_translation(self)->None:
         """
+        The function to perform text translation using the Hugging Face model API for all specified languages
         Args:
             No arguments accepted. Just do the translations.
         Return:
             No return value. Just do the translations.
         """
+        # Adding subheader to the streamlit app
         st.subheader("Translation")
+        # Adding a expander for the model description
         with st.expander("Model Description"):
             st.markdown("""This model is a translation model (Helsinki-NLP/opus-mt) that is fine-tuned on the OpenAI community dataset. 
                      It is used to translate text from one language to another. This model supports translation of nine languages including English, Chinese, Germen, Swedish,
                      French, Spanish, Russian, Arabic and Italian.""")
         st.divider()
-    
+        # Define the columns for the streamlit app
         cols=st.columns([4,2,4])
-        # list of languages
+        # sort list of languages in alphabetical order
         sorted_languages=sorted(self.all_languages.keys(),reverse=False)
+        # Create a column layout for the source and output languages
         with cols[0]:
+            # Create dropdown for user to select source language
             source_language=st.selectbox("Select a language",sorted_languages,key='sr')
-            if source_language in self.all_languages:
-                output_language_list=self.all_languages[source_language]
-            text=st.text_area("Enter your Text", placeholder="Type your text...")
             
+            # Check if the source language is in the list of all languages
+            if source_language in self.all_languages:
+                # Get the output languages list based on the source language
+                output_language_list=self.all_languages[source_language]
+            # Create text area for user to enter text to be translated
+            text=st.text_area("Enter your Text", placeholder="Type your text...")
+        
+        # Create a column layout for the second column 
         with cols[1]:
             pass
-        # Output languages list
+        # Create a column layout for the output language
         with cols[2]:
+            # Create dropdown for user to select output language
             output_language=st.selectbox("Select a language",sorted(output_language_list),key='ol')
         
         # Define a dictionary to map language pairs to API endpoints
@@ -183,25 +202,30 @@ class TextTranslation:
         ('Italian', 'English'): self.it_en_api,
     }
 
-        # Check if the language pair is in the language map
+        # Check if the selected language pair is in the language map
         if (source_language, output_language) in language_map:
         
             # to disable and enable button
             done=False if len(text)>=1  else True
-        
+
+            # Create a button to translate the text
             translate_button = st.button("Translate",disabled=done)
             
+            # Check if the Translate button is clicked
             if translate_button:
                 # calling the function to hit api of model
                 translated_text = self.text_translation_api(text, language_map[(source_language, output_language)])
                 
+                # Check if the translated text is not None
                 if translated_text is not None:
                     with cols[2]:
-                    
+                        # Display the translated text in a text area
                         translated_text_holder=st.text_area("Translated Text",key='translated1',
                                                     value=translated_text)
-                    
+            #If the translation button is not clicked    
             else:
+                # Display a message to the user
                 st.write("If you don't get translation then press Translate button again and again.")
         else:
+            # If the language pair is not supported, display a message
             st.write("Translation not supported for this language pair.")
