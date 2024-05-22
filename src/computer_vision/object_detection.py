@@ -83,12 +83,12 @@ class ObjectDetector:
                             Provide an image to detect the objects. The model predicts the labels and their bounding boxes.""")
         st.divider()
         # Creating a folder to store the image file
-        path=root_dir / 'data'
+        path=root_path / 'data'
         # Creating the folder if it does not exist 
         pathlib.Path.mkdir(path,exist_ok=True)
         
         # Adding an expander to upload the image
-        with st.expander("Upload Image"):
+        with st.expander("Upload Image",expanded=True):
             # Uploading the image
             image = st.file_uploader(type=[".png", ".jpeg", ".jpg"], label="Upload Image")
             # Checking if the image is uploaded
@@ -97,7 +97,7 @@ class ObjectDetector:
                 st.image(image)
         
         # Adding an expander to enter the url     
-        with st.expander("Enter Image URL"):
+        with st.expander("Enter Image URL",expanded=True):
             # getting image url from the user
             url=st.text_input("Enter image URL")
             # Checking if the image url is not empty

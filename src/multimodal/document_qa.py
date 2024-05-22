@@ -82,11 +82,11 @@ class DocumentQuaestionAnswering:
         
         st.divider()
         # Getting the root directory path
-        path=root_dir / 'data'
+        path=root_path / 'data'
         # Creating the directory if it does not exist
         pathlib.Path.mkdir(path,exist_ok=True)
         # Adding expander for the user to upload an image
-        with st.expander("Upload Image"):
+        with st.expander("Upload Image",expanded=True):
             # Adding file uploader to upload an image
             image = st.file_uploader(type=[".png", ".jpeg", ".jpg"], label="Upload Image")
             # Checking if the image is uploaded
@@ -95,7 +95,7 @@ class DocumentQuaestionAnswering:
                 st.image(image)
         
         # Adding expander for the user to enter the image URL    
-        with st.expander("Enter Image URL"):
+        with st.expander("Enter Image URL",expanded=True):
             # Adding text input to enter the image URL
             url=st.text_input("Enter image URL")
             # Checking if the URL is not empty

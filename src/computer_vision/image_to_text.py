@@ -87,12 +87,12 @@ class ImageToTextGenerator:
                             Provide an image to extract the text. The model extracts the text from the image.""")
         st.divider()
         # Creating a folder to store the image file
-        path=root_dir / 'data'
+        path=root_path / 'data'
         # Creating the folder if it does not exist 
         pathlib.Path.mkdir(path,exist_ok=True)
         
         # Adding an expander to upload the image
-        with st.expander("Upload Image"):
+        with st.expander("Upload Image",expanded=True):
             # Uploading the image
             image = st.file_uploader(type=[".png", ".jpeg", ".jpg"], label="Upload Image")
             # Checking if the image is uploaded
@@ -101,7 +101,7 @@ class ImageToTextGenerator:
                 st.image(image)
          
         # Adding an expander to enter the url    
-        with st.expander("Enter Image URL"):
+        with st.expander("Enter Image URL",expanded=True):
             # Getting the image url from the user
             url=st.text_input("Enter image URL")
             # Checking if url is not empty

@@ -31,7 +31,8 @@ class AudioToAudio:
         Access_Token = st.session_state.access_token
         try:
             # Specify the Hugging Face model API URL
-            API_URL = "https://api-inference.huggingface.co/models/openai/whisper-large-v3"
+            # API_URL = "https://api-inference.huggingface.co/models/openai/whisper-large-v3"
+            API_URL = "https://api-inference.huggingface.co/models/speechbrain/mtl-mimic-voicebank"
             # Specify the headers for API request
             headers = {"Authorization": f"Bearer {Access_Token}"}
 
@@ -60,10 +61,10 @@ class AudioToAudio:
             st.error("Request exception")
         except requests.HTTPError as e:
             st.error("HTTP error")
-        except KeyError as e:
-            st.error("Try again...")
-        except (Exception, ValueError) as e:
-            st.error("Unknown error")
+        # except KeyError as e:
+        #     st.error("Try again...")
+        # except (Exception, ValueError) as e:
+        #     st.error("Unknown error")
 
     # Defining the method to convert audio to audio process
     def audio_to_audio(self):
@@ -85,6 +86,7 @@ class AudioToAudio:
             filename = st.file_uploader(type=[".flac", ".wav", ".mp3"], label="Upload Audio")
             # Checking if the file was uploaded
             if filename is not None:
+                st.audio(filename)
                 # Defining the path to save the uploaded file
                 file_path = file_folder / filename.name
                 # Save the uploaded file to the data folder

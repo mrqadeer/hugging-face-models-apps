@@ -78,6 +78,7 @@ class AudioClassifier:
         # Adding an expander for uploading audio file
         with st.expander("Upload Audio"):
             filename = st.file_uploader(type=[".flac", ".wav", ".mp3"], label="Upload Audio")
+            st.audio(filename)
             # Checking if the file was uploaded
             if filename is not None:
                 # Defining the path to save the uploaded file

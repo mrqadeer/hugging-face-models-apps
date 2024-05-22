@@ -82,7 +82,7 @@ class ImageClassifier:
         # Adding a subheader to the streamlit app
         st.subheader("Image Classification")
         # Creating a folder to store the image file
-        path=root_dir / 'data'
+        path=root_path / 'data'
         # Creating the folder if it does not exist
         pathlib.Path.mkdir(path,exist_ok=True)
         # Adding an expander for the model description
@@ -92,7 +92,7 @@ class ImageClassifier:
         st.divider()
        
         # Adding an expander to upload the image
-        with st.expander("Upload Image"):
+        with st.expander("Upload Image",expanded=True):
             # Uploading the image
             image = st.file_uploader(type=[".png", ".jpeg", ".jpg"], label="Upload Image")
             # Checking if the image is uploaded
@@ -101,7 +101,7 @@ class ImageClassifier:
                 st.image(image)
          
         # Adding an expander to enter the image URL    
-        with st.expander("Enter Image URL"):
+        with st.expander("Enter Image URL",expanded=True):
             # Getting the image URL from user
             url=st.text_input("Enter image URL")
             # Checking if the URL is not empty

@@ -27,6 +27,9 @@ class TextSpeech:
         try:
             #Specify the Hugging Face model API URL
             API_URL = "https://api-inference.huggingface.co/models/speechbrain/mtl-mimic-voicebank"
+            
+            # API_URL = "https://api-inference.huggingface.co/models/myshell-ai/MeloTTS-English"
+            # API_URL = "https://api-inference.huggingface.co/models/microsoft/speecht5_tts"
             # Specify the headers for API request
             headers = {"Authorization": f"Bearer {Access_Token}"}
 
@@ -71,6 +74,7 @@ class TextSpeech:
             audio_output=self.text_to_speech_api(text)
             # Decoding output file
             temp=audio_output.decode()
+            st.info(temp)
             
             # Checking if the output is not an error
             if not 'error' in temp:

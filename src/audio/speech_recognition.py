@@ -80,6 +80,7 @@ class SpeechRecognition:
         with st.expander("Upload Audio File", expanded=True):
             # Adding a file uploader to upload the audio file
             filename = st.file_uploader(type=[".flac", ".wav", ".mp3"], label="Upload Audio")
+            st.audio(filename)
             # Checking if the file is uploaded
             
             if filename is not None:
