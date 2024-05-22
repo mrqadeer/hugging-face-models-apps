@@ -20,12 +20,28 @@ Welcome to the Hugging Face Model Showcase app! This app demonstrates the power 
 ## Installation
 
 1. Clone the repository:
+   Open your terminal and run command
 
    ```
-   https://github.com/AnilaGToor/hugging-face-models-apps.git
+   git clone https://github.com/AnilaGToor/hugging-face-models-apps.git
    ```
-2. Create a virtual environment and activate it:
-3. Install the required dependencies:
+2. Go to the project folder
+   ```bash 
+   cd hugging-face-models-apps
+   ```
+3. Create a virtual environment and activate it:
+   ```bash
+   python -m venv huggingface
+   ```
+   Activate on Windows
+   ```bash
+   huggingface\Scripts\activate
+   ```
+   Activate on Linux/Mac
+   ```bash
+   source huggingface/bin/activate
+   ```
+4. Install the required dependencies:
 
    ```
    pip install -r requirements.txt
@@ -38,7 +54,8 @@ Welcome to the Hugging Face Model Showcase app! This app demonstrates the power 
    ```
    streamlit run app.py
    ```
-2. If your streamlit app doesn't open in your web browser then go to `http://localhost:8501` to access the app.
+2. If your streamlit app doesn't open in your web browser then go to ```http://localhost:8501``` 
+to access the app.
 3. Provide Hugging Face Access Token (API Key) to get your access key follow the link [https://huggingface.co/settings/tokens]()
 4. Navigate through different categories (Audio, Computer Vision, Multimodal and NLP) to explore the capabilities of various Hugging Face models.
 
@@ -83,13 +100,7 @@ Welcome to the Hugging Face Model Showcase app! This app demonstrates the power 
 
 ## Contributing
 
-We welcome contributions to improve this app! If you have suggestions or bug reports, please open an issue or submit a pull request. Follow these steps to contribute:
-
-1. Fork the repository
-2. Create a new branch
-3. Make your changes
-4. Commit your changes
-5. Push to the branch
-6. Open a pull request on GitHub
+We welcome contributions! Please read [Contribution](CONTRIBUTE.md) file for more detail.
 
 ## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
