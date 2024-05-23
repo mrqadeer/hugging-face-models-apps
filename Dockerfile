@@ -3,7 +3,7 @@ COPY . /app
 WORKDIR /app
 RUN pip install -r requirements.txt
 EXPOSE $PORT
-CMD ["streamlit", "run", "app.py", "--server.port", "$PORT", "--server.address", "0.0.0.0"]
+CMD ["streamlit", "run", "app.py", "--server.port", $PORT, "--server.address", "0.0.0.0"]
 # FROM ubuntu:latest
 
 # WORKDIR /usr/app/src
