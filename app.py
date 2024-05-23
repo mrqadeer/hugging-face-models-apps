@@ -1,10 +1,17 @@
 
+import os
 import streamlit as st
 from streamlit_option_menu import option_menu
 #from src.sentiment_analysis import sentiment_analysis
 from src.huggingface import HuggingFace
 from src.home import Home
 
+
+# Set the port
+port = int(os.environ.get("PORT", 8501))
+
+# Set up the Streamlit config
+st.set_option('server.port', port)
 st.set_page_config("HuggingFace")
 
 #main class

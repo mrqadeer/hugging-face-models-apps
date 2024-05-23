@@ -1,15 +1,38 @@
+# FROM python:3.10-slim
+# COPY . /app
+# WORKDIR /app
+# RUN pip install -r requirements.txt
+# # Make port configurable via environment variable, default to 8501
+# ENV PORT 8501
+
+# # Expose the port that the app runs on
+# EXPOSE $PORT
+
+# # Run the Streamlit app
+# CMD ["streamlit", "run", "app.py", "--server.port", "8501", "--server.address", "0.0.0.0"]
+
+
+
 FROM python:3.10-slim
+
+# Copy the current directory contents into the container at /app
 COPY . /app
+
+# Set the working directory to /app
 WORKDIR /app
+
+# Install any needed packages specified in requirements.txt
 RUN pip install -r requirements.txt
-# Make port configurable via environment variable, default to 8501
-ENV PORT 8501
 
 # Expose the port that the app runs on
 EXPOSE $PORT
 
 # Run the Streamlit app
-CMD ["streamlit", "run", "app.py", "--server.port", "8501", "--server.address", "0.0.0.0"]
+CMD ["streamlit", "run", "app.py", "--server.port", "$PORT", "--server.address", "0.0.0.0"]
+
+
+
+
 # FROM ubuntu:latest
 
 # WORKDIR /usr/app/src
