@@ -24,11 +24,8 @@ WORKDIR /app
 # Install any needed packages specified in requirements.txt
 RUN pip install -r requirements.txt
 
-# Expose the port that the app runs on
-EXPOSE $PORT
-
 # Run the Streamlit app
-CMD ["streamlit", "run", "app.py", "--server.port", "$PORT", "--server.address", "0.0.0.0"]
+CMD ["streamlit", "run", "app.py"]
 
 
 
