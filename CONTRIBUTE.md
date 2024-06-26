@@ -1,6 +1,6 @@
-# Contributing to [Your Project Name]
+# Contributing to [Hugging Face Models Apps]
 
-Thank you for considering contributing to [Your Project Name]! We welcome contributions from the community and are grateful for your efforts to help improve this project.
+Thank you for considering contributing to [Hugging Face Models Apps]! We welcome contributions from the community and are grateful for your efforts to help improve this project.
 
 ## Table of Contents
 
