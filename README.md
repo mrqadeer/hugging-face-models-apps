@@ -24,7 +24,7 @@ Check it out [Hugging Face Models Apps](https://hugging-face-models-apps-qrtn5wi
    Open your terminal and run command
 
    ```
-   git clone https://github.com/AnilaGToor/hugging-face-models-apps.git
+   git clone https://github.com/mrqadeer/hugging-face-models-apps.git
    ```
 2. Go to the project folder
    ```bash 
