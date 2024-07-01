@@ -7,7 +7,7 @@ from src.huggingface import HuggingFace
 from src.home import Home
 
 
-st.set_page_config("HuggingFace",page_title='Hugging Face Zone',page_icon='🤗',layout='wide')
+st.set_page_config("HuggingFace",page_icon='🤗',layout='wide')
 
 #main class
 class App:
