@@ -1,7 +1,8 @@
 # Hugging Face Model Showcase - A Gold Mine
 
 Welcome to the Hugging Face Model Showcase app! This app demonstrates the power and versatility of Hugging Face models across multiple domains, including NLP, Audio, Computer Vision and Multimodal. The app utilizes models offering serverless APIs for seamless responses.
-
+## Deployed on Strealit Cloud
+Check it out [Hugging Face Models Apps](https://hugging-face-models-apps-qrtn5wius38afgfqghjats.streamlit.app/)
 ## Table of Contents
 
 * [Installation](https://chatgpt.com/c/65622743-f1c1-416c-9e74-58d07a53ed33#installation)

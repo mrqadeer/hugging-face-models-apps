@@ -7,12 +7,7 @@ from src.huggingface import HuggingFace
 from src.home import Home
 
 
-# Set the port
-port = int(os.environ.get("PORT", 8501))
-
-# Set up the Streamlit config
-st.set_option('server.port', port)
-st.set_page_config("HuggingFace")
+st.set_page_config("HuggingFace",page_title='Hugging Face Zone',page_icon='🤗',layout='wide')
 
 #main class
 class App:
