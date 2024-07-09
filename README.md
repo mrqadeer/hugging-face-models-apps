@@ -1,22 +1,26 @@
 # Hugging Face Model Showcase - A Gold Mine
 
 Welcome to the Hugging Face Model Showcase app! This app demonstrates the power and versatility of Hugging Face models across multiple domains, including NLP, Audio, Computer Vision and Multimodal. The app utilizes models offering serverless APIs for seamless responses.
-## Deployed on Strealit Cloud
+## Deployment
+### On Streamlit Cloud
 Check it out [Hugging Face Models Apps](https://hugging-face-models-apps-qrtn5wius38afgfqghjats.streamlit.app/)
+### On Render
+Check it out [Hugging Face Models Apps](https://hugging-face-models-apps.onrender.com/)
 ## Table of Contents
 
-* [Installation](https://chatgpt.com/c/65622743-f1c1-416c-9e74-58d07a53ed33#installation)
-* [Usage](https://chatgpt.com/c/65622743-f1c1-416c-9e74-58d07a53ed33#usage)
-* [Features](https://chatgpt.com/c/65622743-f1c1-416c-9e74-58d07a53ed33#features)
-
-  * [Audio](https://chatgpt.com/c/65622743-f1c1-416c-9e74-58d07a53ed33#audio)
-  * [Computer Vision](https://chatgpt.com/c/65622743-f1c1-416c-9e74-58d07a53ed33#computer-vision)
-  * [Multimodal](https://chatgpt.com/c/65622743-f1c1-416c-9e74-58d07a53ed33#multimodal)
-  * [NLP](https://chatgpt.com/c/65622743-f1c1-416c-9e74-58d07a53ed33#nlp)
-* 
-* [Getting Your Hugging Face Access Token](https://chatgpt.com/c/65622743-f1c1-416c-9e74-58d07a53ed33#getting-your-hugging-face-access-token)
-* [Contributing](https://chatgpt.com/c/65622743-f1c1-416c-9e74-58d07a53ed33#contributing)
-* [License](https://chatgpt.com/c/65622743-f1c1-416c-9e74-58d07a53ed33#license)
+- [Hugging Face Model Showcase - A Gold Mine](https://huggingface.co)
+  - [Deployments](#deployment)
+  - [Table of Contents](#table-of-contents)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [Features](#features)
+    - [Audio](#audio)
+    - [Computer Vision](#computer-vision)
+    - [Multimodal](#multimodal)
+    - [NLP](#nlp)
+  - [Getting Your Hugging Face Access Token](#getting-your-hugging-face-access-token)
+  - [Contributing](#contributing)
+  - [License](#license)
 
 ## Installation
 
